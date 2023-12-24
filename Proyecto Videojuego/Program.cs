@@ -1,62 +1,41 @@
 using System;
-namespace GameProject {
-    class SanzDavidCode
+using System.Security.Cryptography.X509Certificates;
+
+namespace GameProject 
+{
+
+    public static class GraphicFunc
     {
-        static void Main()
+        public static void DrawWelcome()
         {
-            int numStart, count, countGeneral, countInicial = 0;
-            //estats personatges
-            float hpArquera = 0, defArquera = 0, hpBarbaro = 0, defBarbaro = 0, hpMaga = 0, defMaga = 0, hpDruida = 0, defDruida = 0, hpMonstre = 0, defMonstre = 0, atacArquera = 0, atacBarbaro = 0, atacMaga = 0, atacDruida = 0, atacMonstre = 0;
-            //rangs personatges
-            const int minVidaArquera = 1500, maxVidaArquera = 2000, minAtacArquera = 180, maxAtacArquera = 300, minDefensaArquera = 25, maxDefensaArquera = 40;
-            const int minVidaBarbaro = 3000, maxVidaBarbaro = 3750, minAtacBarbaro = 150, maxAtacBarbaro = 250, minDefensaBarbaro = 35, maxDefensaBarbaro = 45;
-            const int minVidaMaga = 1000, maxVidaMaga = 1500, minAtacMaga = 300, maxAtacMaga = 350, minDefensaMaga = 20, maxDefensaMaga = 35;
-            const int minVidaDruida = 2000, maxVidaDruida = 2500, minAtacDruida = 70, maxAtacDruida = 120, minDefensaDruida = 25, maxDefensaDruida = 40;
-            const int minVidaMonstre = 9000, maxVidaMonstre = 12000, minAtacMonstre = 250, maxAtacMonstre = 4000, minDefensaMonstre = 20, maxDefensaMonstre = 30;
-            const string Vida = "Vida", Atac = "Atac", Defensa = "Defensa", Error = "Els valors que has establert no hi són dins dels paràmetres", Intro = "Pressiona INTRO per saltar la pantalla en negre";
-            const string monstre = "Monstre ", arquera = "Arquera ", barbaro = "Bàrbar ", maga = "Maga ", druida = "Druida "; //noms strings
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("···························································································");
-            Console.WriteLine(":                                                                                         :");
-            Console.WriteLine(": ██████╗ ███████╗███╗   ██╗██╗   ██╗██╗███╗   ██╗ ██████╗ ██╗   ██╗████████╗     █████╗  :");
-            Console.WriteLine(": ██╔══██╗██╔════╝████╗  ██║██║   ██║██║████╗  ██║██╔════╝ ██║   ██║╚══██╔══╝    ██╔══██╗ :");
-            Console.WriteLine(": ██████╔╝█████╗  ██╔██╗ ██║██║   ██║██║██╔██╗ ██║██║  ███╗██║   ██║   ██║       ███████║ :");
-            Console.WriteLine(": ██╔══██╗██╔══╝  ██║╚██╗██║╚██╗ ██╔╝██║██║╚██╗██║██║   ██║██║   ██║   ██║       ██╔══██║ :");
-            Console.WriteLine(": ██████╔╝███████╗██║ ╚████║ ╚████╔╝ ██║██║ ╚████║╚██████╔╝╚██████╔╝   ██║       ██║  ██║ :");
-            Console.WriteLine(": ╚═════╝ ╚══════╝╚═╝  ╚═══╝  ╚═══╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝  ╚═════╝    ╚═╝       ╚═╝  ╚═╝ :");
-            Console.WriteLine(":                                                                                         :");
-            Console.WriteLine(": ██╗  ██╗███████╗██████╗  ██████╗ ██╗███████╗    ██╗   ██╗███████╗                       :");
-            Console.WriteLine(": ██║  ██║██╔════╝██╔══██╗██╔═══██╗██║██╔════╝    ██║   ██║██╔════╝                       :");
-            Console.WriteLine(": ███████║█████╗  ██████╔╝██║   ██║██║███████╗    ██║   ██║███████╗                       :");
-            Console.WriteLine(": ██╔══██║██╔══╝  ██╔══██╗██║   ██║██║╚════██║    ╚██╗ ██╔╝╚════██║                       :");
-            Console.WriteLine(": ██║  ██║███████╗██║  ██║╚██████╔╝██║███████║     ╚████╔╝ ███████║                       :");
-            Console.WriteLine(": ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝╚══════╝      ╚═══╝  ╚══════╝                       :");
-            Console.WriteLine(":                                                                                         :");
-            Console.WriteLine(": ███╗   ███╗ ██████╗ ███╗   ██╗███████╗████████╗██████╗ ███████╗███████╗                 :");
-            Console.WriteLine(": ████╗ ████║██╔═══██╗████╗  ██║██╔════╝╚══██╔══╝██╔══██╗██╔════╝██╔════╝                 :");
-            Console.WriteLine(": ██╔████╔██║██║   ██║██╔██╗ ██║███████╗   ██║   ██████╔╝█████╗  ███████╗                 :");
-            Console.WriteLine(": ██║╚██╔╝██║██║   ██║██║╚██╗██║╚════██║   ██║   ██╔══██╗██╔══╝  ╚════██║                 :");
-            Console.WriteLine(": ██║ ╚═╝ ██║╚██████╔╝██║ ╚████║███████║   ██║   ██║  ██║███████╗███████║                 :");
-            Console.WriteLine(": ╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚══════╝                 :");
-            Console.WriteLine(":                                                                                         :");
-            Console.WriteLine("···························································································");
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(Intro);
-            Console.ResetColor();
-            Console.ReadLine();
-            Console.WriteLine("Obre la terminal per a una millor experiencia...");
-            Console.ReadLine();
-            Console.Clear();
-            Console.ResetColor();
-            Console.WriteLine("Què vols fer?");
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Jugar (0)");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Sortir (1)");
-            Console.ResetColor();
-            Console.ForegroundColor = ConsoleColor.Gray;
-            Console.Write(@"
+            const string Intro = "Pressiona INTRO per saltar la pantalla en negre", OpenTerminal = "Obre la terminal per a una millor experiencia...", Choose = "Què vols fer?", Play = "Jugar (0)", Leave = "Sortir (1)";
+            const string Screen = $@"
+                             ···························································································
+                             :                                                                                         :
+                             : ██████╗ ███████╗███╗   ██╗██╗   ██╗██╗███╗   ██╗ ██████╗ ██╗   ██╗████████╗     █████╗  :
+                             : ██╔══██╗██╔════╝████╗  ██║██║   ██║██║████╗  ██║██╔════╝ ██║   ██║╚══██╔══╝    ██╔══██╗ :
+                             : ██████╔╝█████╗  ██╔██╗ ██║██║   ██║██║██╔██╗ ██║██║  ███╗██║   ██║   ██║       ███████║ :
+                             : ██╔══██╗██╔══╝  ██║╚██╗██║╚██╗ ██╔╝██║██║╚██╗██║██║   ██║██║   ██║   ██║       ██╔══██║ :
+                             : ██████╔╝███████╗██║ ╚████║ ╚████╔╝ ██║██║ ╚████║╚██████╔╝╚██████╔╝   ██║       ██║  ██║ :
+                             : ╚═════╝ ╚══════╝╚═╝  ╚═══╝  ╚═══╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝  ╚═════╝    ╚═╝       ╚═╝  ╚═╝ :
+                             :                                                                                         :
+                             : ██╗  ██╗███████╗██████╗  ██████╗ ██╗███████╗    ██╗   ██╗███████╗                       :
+                             : ██║  ██║██╔════╝██╔══██╗██╔═══██╗██║██╔════╝    ██║   ██║██╔════╝                       :
+                             : ███████║█████╗  ██████╔╝██║   ██║██║███████╗    ██║   ██║███████╗                       :
+                             : ██╔══██║██╔══╝  ██╔══██╗██║   ██║██║╚════██║    ╚██╗ ██╔╝╚════██║                       :
+                             : ██║  ██║███████╗██║  ██║╚██████╔╝██║███████║     ╚████╔╝ ███████║                       :
+                             : ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝╚══════╝      ╚═══╝  ╚══════╝                       :
+                             :                                                                                         :
+                             : ███╗   ███╗ ██████╗ ███╗   ██╗███████╗████████╗██████╗ ███████╗███████╗                 :
+                             : ████╗ ████║██╔═══██╗████╗  ██║██╔════╝╚══██╔══╝██╔══██╗██╔════╝██╔════╝                 :
+                             : ██╔████╔██║██║   ██║██╔██╗ ██║███████╗   ██║   ██████╔╝█████╗  ███████╗                 :
+                             : ██║╚██╔╝██║██║   ██║██║╚██╗██║╚════██║   ██║   ██╔══██╗██╔══╝  ╚════██║                 :
+                             : ██║ ╚═╝ ██║╚██████╔╝██║ ╚████║███████║   ██║   ██║  ██║███████╗███████║                 :
+                             : ╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚══════╝                 :
+                             :                                                                                         :
+                             ···························································································
+            ";
+            const string Pc = @"
                                                                     _________________
                                                                    |                 |
                                                                    |   ___________   |
@@ -81,8 +60,313 @@ namespace GameProject {
                                          )    (                    |                 |
                                         /      \                   |                 |
                                        /________\                  |_________________|
-            ");
+            ";
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(Screen);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(Intro);
             Console.ResetColor();
+            Console.ReadLine();
+            Console.WriteLine(OpenTerminal);
+            Console.ReadLine();
+            Console.Clear();
+            Console.ResetColor();
+            Console.WriteLine(Choose);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(Play);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(Leave);
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write(Pc);
+            Console.ResetColor();
+        }
+        public static void Archer()
+        {
+            const string Archer = @"          
+                           4$$-.                                          
+                           4   "".                                       
+                           4    ^.                                       
+                           4     $                                       
+                           4     'b                                      
+                           4      ""b.                                   
+                           4        $                                    
+                           4        $r                                   
+                           4        $F                                   
+                -$b========0========$b====*P=->>                         
+                           4       *$$F                                 
+                           4        $$""                                
+                           4       .$F                                  
+                           4       dP                                   
+                           4      F                                     
+                           4     @                                      
+                           4    .                                       
+                           J.  .                                         
+                          '$$
+            ";
+            Console.WriteLine(Archer);
+        }
+        public static void Barbarian()
+        {
+            const string Barbarian = @"
+                                       /\  |\
+                                     __)(__) \
+                                    (__{}__   >
+                                       ||  ) /
+                                       ||  |/
+                                       ||
+                                       ||
+                                       ||
+                                       ||
+                                       ||
+                                       /\
+                                      '--'";
+            Console.WriteLine(Barbarian);
+        }
+        public static void Mage()
+        {
+            const string Mage = @"
+                                        _.-.
+                                    .-'%%~%'.
+                                 _.'%%¨_.'-._\
+                               .'%%%%~|      '
+                              '%¨%%%%%-
+                    .________/_________\_______.
+                     ¨¨°¨°¨¨            ¨°¨¨¨°¨";
+            Console.WriteLine(Mage);
+        }
+        public static void Druid()
+        {
+            const string Druid =@"  
+                                    .   .   .
+                                   / \\/ \\/ \
+                                   \\_     _//
+                                     \\_ _//
+                                       | |
+                                       | |
+                                       | |
+                                       | |
+                                       | |
+                                       | |
+                                       | |
+                                       | |
+                                       | |
+                                       | |
+                                       | |
+                                       | |
+                                       | |
+                                       |_| 
+                                       ( )
+                                      _/ \_
+                                     /_____\ ";
+            Console.WriteLine(Druid);
+        }
+        public static void Monster()
+        {
+            const string Monster = @"
+                                                                  ,--,  ,.-.
+                                   ,                   \,       '-,-`,'-.' | ._
+                                  /|           \    ,   |\         }  )/  / `-,'
+                                  [ ,          |\  /|   | |        /  \|  |/`  ,`
+                                  | |       ,.`  `,` `, | |  _,...(   (      .',
+                                  \  \  __ ,-` `  ,  , `/ |,'      Y     (   /_L\
+                                   \  \_\,``,   ` , ,  /  |         )         _,/
+                                    \  '  `  ,_ _`_,-,<._.<        /         /
+                                     ', `>.,`  `  `   ,., |_      |         /
+                                       \/`  `,   `   ,`  | /__,.-`    _,   `\
+                                   -,-..\  _  \  `  /  ,  / `._) _,-\`       \
+                                    \_,,.) /\    ` /  / ) (-,, ``    ,        |
+                                   ,` )  | \_\       '-`  |  `(               \
+                                  /  /```(   , --, ,' \   |`<`    ,            |
+                                 /  /_,--`\   <\  V /> ,` )<_/)  | \      _____)
+                           ,-, ,`   `   (_,\ \    |   /) / __/  /   `----`
+                          (-, \           ) \ ('_.-._)/ /,`    /
+                          | /  `          `/ \\ V   V, /`     /
+                       ,--\(        ,     <_/`\\     ||      /
+                      (   ,``-     \/|         \-A.A-`|     /
+                     ,>,_ )_,..(    )\          -,,_-`  _--`
+                    (_ \|`   _,/_  /  \_            ,--`
+                     \( `   <.,../`     `-.._   _,-` ";
+            Console.WriteLine(Monster);
+        }
+        public static void StartBattle()
+        {
+            const string StartBattle = @"
+                  ______   ______   .___  ___.  _______ .__   __.   ______  _______ .___  ___.     __          ___         .______        ___   .___________.    ___       __       __          ___       __ 
+                 /      | /  __  \  |   \/   | |   ____||  \ |  |  /      ||   ____||   \/   |    |  |        /   \        |   _  \      /   \  |           |   /   \     |  |     |  |        /   \     |  |
+                |  ,----'|  |  |  | |  \  /  | |  |__   |   \|  | |  ,----'|  |__   |  \  /  |    |  |       /  ^  \       |  |_)  |    /  ^  \ `---|  |----`  /  ^  \    |  |     |  |       /  ^  \    |  |
+                |  |     |  |  |  | |  |\/|  | |   __|  |  . `  | |  |     |   __|  |  |\/|  |    |  |      /  /_\  \      |   _  <    /  /_\  \    |  |      /  /_\  \   |  |     |  |      /  /_\  \   |  |
+                |  `----.|  `--'  | |  |  |  | |  |____ |  |\   | |  `----.|  |____ |  |  |  |    |  `----./  _____  \     |  |_)  |  /  _____  \   |  |     /  _____  \  |  `----.|  `----./  _____  \  |__|
+                 \______| \______/  |__|  |__| |_______||__| \__|  \______||_______||__|  |__|    |_______/__/     \__\    |______/  /__/     \__\  |__|    /__/     \__\ |_______||_______/__/     \__\ (__)
+                ";
+            Console.WriteLine(StartBattle);
+        }
+        public static void Skull()
+        {
+            long skullCount = 5, timerSkull = 50000000; 
+            while (skullCount > 0)
+            {
+                Console.WriteLine(@"
+                                                            ,--.
+                                                           {    }
+                                                           K,   }
+                                                          /  ~Y`
+                                                     ,   /   /
+                                                    {_'-K.__/
+                                                      `/-.__L._
+                                                      /  ' /`\_}
+                                                     /  ' /
+                                             ____   /  ' /
+                                      ,-'~~~~    ~~/  ' /_
+                                    ,'             ``~~~  ',
+                                   (                        Y
+                                  {                         I
+                                 {      -                    `,
+                                 |       ',                   )
+                                 |        |   ,..__      __. Y
+                                 |    .,_./  Y ' / ^Y   J   )|
+                                 \           |' /   |   |   ||
+                                  \          L_/    . _ (_,.'(
+                                   \,   ,      ^^""' / |      )
+                                     \_  \          /,L]     /
+                                       '-_~-,       ` `   ./`
+                                          `'{_            )
+                                              ^^\..___,.--`
+
+                            ");
+                while (timerSkull > 0)
+                {
+                    timerSkull--;
+                }
+                Console.Clear();
+                timerSkull = 50000000;
+                Console.WriteLine(@"
+                                                                        ,--.
+                                                                       {    }
+                                                                       K,   }
+                                                                      /  ~Y`
+                                                                 ,   /   /
+                                                                {_'-K.__/
+                                                                  `/-.__L._
+                                                                  /  ' /`\_}
+                                                                 /  ' /
+                                                         ____   /  ' /
+                                                  ,-'~~~~    ~~/  ' /_
+                                                ,'             ``~~~  ',
+                                               (                        Y
+                                              {                         I
+                                             {      -                    `,
+                                             |       ',                   )
+                                             |        |   ,..__      __. Y
+                                             |    .,_./  Y ' / ^Y   J   )|
+                                             \           |' /   |   |   ||
+                                              \          L_/    . _ (_,.'(
+                                               \,   ,      ^^""' / |      )
+                                                 \_  \          /,L]     /
+                                                   '-_~-,       ` `   ./`
+                                                      `'{_            )
+                                                          ^^\..___,.--`
+
+                            ");
+                while (timerSkull > 0)
+                {
+                    timerSkull--;
+                }
+                timerSkull = 50000000;
+                Console.Clear();
+                skullCount--;
+            }
+            skullCount = 5;
+        }
+        public static void Lose()
+        {
+            const string Lose = @"
+
+
+                             .+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+. 
+                            (                                                                                                             )
+                             )                                                                                                           ( 
+                            (                                                                                                             )
+                             )      ██░ ██  ▄▄▄        ██████     ██▓███  ▓█████  ██▀███  ▓█████▄  █    ██ ▄▄▄█████▓                     ( 
+                            (      ▓██░ ██▒▒████▄    ▒██    ▒    ▓██░  ██▒▓█   ▀ ▓██ ▒ ██▒▒██▀ ██▌ ██  ▓██▒▓  ██▒ ▓▒                      )
+                             )     ▒██▀▀██░▒██  ▀█▄  ░ ▓██▄      ▓██░ ██▓▒▒███   ▓██ ░▄█ ▒░██   █▌▓██  ▒██░▒ ▓██░ ▒░                     ( 
+                            (      ░▓█ ░██ ░██▄▄▄▄██   ▒   ██▒   ▒██▄█▓▒ ▒▒▓█  ▄ ▒██▀▀█▄  ░▓█▄   ▌▓▓█  ░██░░ ▓██▓ ░                       )
+                             )     ░▓█▒░██▓ ▓█   ▓██▒▒██████▒▒   ▒██▒ ░  ░░▒████▒░██▓ ▒██▒░▒████▓ ▒▒█████▓   ▒██▒ ░  ██▓  ██▓  ██▓       ( 
+                            (       ▒ ░░▒░▒ ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░   ▒▓▒░ ░  ░░░ ▒░ ░░ ▒▓ ░▒▓░ ▒▒▓  ▒ ░▒▓▒ ▒ ▒   ▒ ░░    ▒▓▒  ▒▓▒  ▒▓▒        )
+                             )      ▒ ░▒░ ░  ▒   ▒▒ ░░ ░▒  ░ ░   ░▒ ░      ░ ░  ░  ░▒ ░ ▒░ ░ ▒  ▒ ░░▒░ ░ ░     ░     ░▒   ░▒   ░▒        ( 
+                            (       ░  ░░ ░  ░   ▒   ░  ░  ░     ░░          ░     ░░   ░  ░ ░  ░  ░░░ ░ ░   ░       ░    ░    ░          )
+                             )      ░  ░  ░      ░  ░      ░                 ░  ░   ░        ░       ░                ░    ░    ░        ( 
+                            (                                                              ░                          ░    ░    ░         )
+                             )                                                                                                           ( 
+                            (                                                                                                             )
+                             )                                                                                                           ( 
+                            (                                                                                                             )
+                             ""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+"" 
+
+                    ";
+            Console.WriteLine(Lose);
+        }
+        public static void Win()
+        {
+            const string Congrats =@"
+
+                        ┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+                        │                                                                                                                                                                          │
+                        │  ███████╗███████╗██╗     ██╗ ██████╗██╗████████╗ █████╗ ████████╗███████╗    ██╗  ██╗ █████╗ ███████╗     ██████╗ ██╗   ██╗ █████╗ ███╗   ██╗██╗   ██╗ █████╗ ████████╗  │
+                        │  ██╔════╝██╔════╝██║     ██║██╔════╝██║╚══██╔══╝██╔══██╗╚══██╔══╝██╔════╝    ██║  ██║██╔══██╗██╔════╝    ██╔════╝ ██║   ██║██╔══██╗████╗  ██║╚██╗ ██╔╝██╔══██╗╚══██╔══╝  │
+                        │  █████╗  █████╗  ██║     ██║██║     ██║   ██║   ███████║   ██║   ███████╗    ███████║███████║███████╗    ██║  ███╗██║   ██║███████║██╔██╗ ██║ ╚████╔╝ ███████║   ██║     │
+                        │  ██╔══╝  ██╔══╝  ██║     ██║██║     ██║   ██║   ██╔══██║   ██║   ╚════██║    ██╔══██║██╔══██║╚════██║    ██║   ██║██║   ██║██╔══██║██║╚██╗██║  ╚██╔╝  ██╔══██║   ██║     │
+                        │  ██║     ███████╗███████╗██║╚██████╗██║   ██║   ██║  ██║   ██║   ███████║    ██║  ██║██║  ██║███████║    ╚██████╔╝╚██████╔╝██║  ██║██║ ╚████║   ██║   ██║  ██║   ██║     │
+                        │  ╚═╝     ╚══════╝╚══════╝╚═╝ ╚═════╝╚═╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝   ╚══════╝    ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝     ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝     │
+                        │                                                                                                                                                                          │
+                        └──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+                    ";
+            const string Medal =@"    
+                                                                                                             _______________
+                                                                                                            |@@@@|     |####|
+                                                                                                            |@@@@|     |####|
+                                                                                                            |@@@@|     |####|
+                                                                                                            \@@@@| ITB |####/
+                                                                                                             \@@@|     |###/
+                                                                                                              `@@|_____|##'
+                                                                                                                   (O)
+                                                                                                                .-'''''-.
+                                                                                                              .'  * * *  `.
+                                                                                                             :  *       *  :
+                                                                                                            : ~ G U A N Y ~ :
+                                                                                                            : ~ A D O R ! ~ :
+                                                                                                             :  *       *  :
+                                                                                                              `.  * * *  .'
+                                                                                                                `-.....-'
+                    ";
+            Console.WriteLine(Congrats);
+            Console.ResetColor();
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(Medal);   
+        }
+    }
+    
+    class SanzDavidCode
+    {
+        public static void Main()
+        {
+            int numStart, count, countGeneral, countInicial = 0;
+            //STATS
+            float hpArquera = 0, defArquera = 0, hpBarbaro = 0, defBarbaro = 0, hpMaga = 0, defMaga = 0, hpDruida = 0, defDruida = 0, hpMonstre = 0, defMonstre = 0, atacArquera = 0, atacBarbaro = 0, atacMaga = 0, atacDruida = 0, atacMonstre = 0;
+            //rangs personatges
+            const int minVidaArquera = 1500, maxVidaArquera = 2000, minAtacArquera = 180, maxAtacArquera = 300, minDefensaArquera = 25, maxDefensaArquera = 40;
+            const int minVidaBarbaro = 3000, maxVidaBarbaro = 3750, minAtacBarbaro = 150, maxAtacBarbaro = 250, minDefensaBarbaro = 35, maxDefensaBarbaro = 45;
+            const int minVidaMaga = 1000, maxVidaMaga = 1500, minAtacMaga = 300, maxAtacMaga = 350, minDefensaMaga = 20, maxDefensaMaga = 35;
+            const int minVidaDruida = 2000, maxVidaDruida = 2500, minAtacDruida = 70, maxAtacDruida = 120, minDefensaDruida = 25, maxDefensaDruida = 40;
+            const int minVidaMonstre = 9000, maxVidaMonstre = 12000, minAtacMonstre = 250, maxAtacMonstre = 4000, minDefensaMonstre = 20, maxDefensaMonstre = 30;
+            const string Vida = "Vida", Atac = "Atac", Defensa = "Defensa", Error = "Els valors que has establert no hi són dins dels paràmetres";
+            const string monstre = "Monstre ", arquera = "Arquera ", barbaro = "Bàrbar ", maga = "Maga ", druida = "Druida "; //noms strings
+
+            //SHOW WELCOME
+            GraphicFunc.DrawWelcome(); 
+            
             numStart = Convert.ToInt32(Console.ReadLine());
             while (numStart != 0 && numStart != 1)
             {
@@ -110,25 +394,10 @@ namespace GameProject {
                         Console.ForegroundColor = ConsoleColor.DarkYellow;
                         Console.WriteLine(arquera);
                         Console.ResetColor();
-                        Console.WriteLine("          4$$-.                                          ");
-                        Console.WriteLine("           4   \".                                       ");
-                        Console.WriteLine("           4    ^.                                       ");
-                        Console.WriteLine("           4     $                                       ");
-                        Console.WriteLine("           4     'b                                      ");
-                        Console.WriteLine("           4      \"b.                                   ");
-                        Console.WriteLine("           4        $                                    ");
-                        Console.WriteLine("           4        $r                                   ");
-                        Console.WriteLine("           4        $F                                   ");
-                        Console.WriteLine("-$b========0========$b====*P=->>                         ");
-                        Console.WriteLine("           4       *$$F                                  ");
-                        Console.WriteLine("           4        $$\"                                 ");
-                        Console.WriteLine("           4       .$F                                   ");
-                        Console.WriteLine("           4       dP                                    ");
-                        Console.WriteLine("           4      F                                      ");
-                        Console.WriteLine("           4     @                                       ");
-                        Console.WriteLine("           4    .                                        ");
-                        Console.WriteLine("           J.  .                                         ");
-                        Console.WriteLine("          '$$                                            ");
+
+                        //DRAW ARCHER
+                        GraphicFunc.Archer();
+
                         while (noacabat)
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
@@ -197,18 +466,10 @@ namespace GameProject {
                         Console.WriteLine(barbaro);
                         Console.ResetColor();
                         Console.WriteLine();
-                        Console.WriteLine("   /\\  |\\");
-                        Console.WriteLine(" __)(__) \\");
-                        Console.WriteLine("(__{}__   >");
-                        Console.WriteLine("   ||  ) /");
-                        Console.WriteLine("   ||  |/");
-                        Console.WriteLine("   ||");
-                        Console.WriteLine("   ||");
-                        Console.WriteLine("   ||");
-                        Console.WriteLine("   ||");
-                        Console.WriteLine("   ||");
-                        Console.WriteLine("   /\\");
-                        Console.WriteLine("  '--'");
+
+                        //DRAW BARBARIAN
+                        GraphicFunc.Barbarian();
+
                         Console.WriteLine();
                         while (noacabat)
                         {
@@ -268,78 +529,7 @@ namespace GameProject {
                             if (countGeneral >= 3) Main();
                         }
                         Console.WriteLine();
-                        Console.Clear();
-                        Console.WriteLine("Selecciona un arma pel teu bàrbar");
-                        Console.ReadLine();
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("Fil obscur de Drakthar (+25 atac): Pressiona 1");
-                        Console.ResetColor();
-                        Console.WriteLine("     ^");
-                        Console.WriteLine("    / \\");
-                        Console.WriteLine("    ) (");
-                        Console.WriteLine("   <   >");
-                        Console.WriteLine("    ) (");
-                        Console.WriteLine("    | |");
-                        Console.WriteLine("    ) (");
-                        Console.WriteLine("   <   >");
-                        Console.WriteLine("    ) (");
-                        Console.WriteLine("    | |");
-                        Console.WriteLine("    ) (");
-                        Console.WriteLine("   <   >");
-                        Console.WriteLine(" .  ) (  .");
-                        Console.WriteLine(" |\\_| |_/|");
-                        Console.WriteLine("< ¤_ ¤ _¤ >");
-                        Console.WriteLine(" |/ \\_/ \\|");
-                        Console.WriteLine(" '  [-]  '");
-                        Console.WriteLine("    [-]");
-                        Console.WriteLine("    [-]");
-                        Console.WriteLine("    [-]");
-                        Console.WriteLine("   (___)");
-                        Console.WriteLine();
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Fil infinit (+150 vida): Pressiona 2");
-                        Console.ResetColor();
-                        Console.WriteLine("    ^");
-                        Console.WriteLine("   / \\");
-                        Console.WriteLine("   | |");
-                        Console.WriteLine("   |||");
-                        Console.WriteLine("   |||");
-                        Console.WriteLine("   |||");
-                        Console.WriteLine("   |||");
-                        Console.WriteLine("   |||");
-                        Console.WriteLine("   |||");
-                        Console.WriteLine("   |||");
-                        Console.WriteLine("   |||");
-                        Console.WriteLine("   |||");
-                        Console.WriteLine("_  |||  _");
-                        Console.WriteLine("\\\\_|_|_//");
-                        Console.WriteLine(" \\_____/");
-                        Console.WriteLine("   (x)");
-                        Console.WriteLine("   (x)");
-                        Console.WriteLine("   (x)");
-                        Console.WriteLine();
-                        int arma = Convert.ToInt32(Console.ReadLine());
-                        while (arma != 1 && arma != 2)
-                        {
-                            Console.ForegroundColor = ConsoleColor.DarkRed;
-                            Console.WriteLine(Error);
-                            Console.ResetColor();
-                            arma = Convert.ToInt32(Console.ReadLine());
-                        }
-                        if (arma == 1)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            atacBarbaro = atacBarbaro + 25;
-                            Console.WriteLine("L' atac a augmentat a " + atacBarbaro);
-                            Console.ResetColor();
-                        }
-                        else
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            hpBarbaro = hpBarbaro + 150;
-                            Console.WriteLine("La vida a augmentat a " + hpBarbaro);
-                            Console.ResetColor();
-                        }
+                        Console.Clear(); 
                     }
                     else if (i == 2)
                     {
@@ -351,14 +541,10 @@ namespace GameProject {
                         Console.ForegroundColor = ConsoleColor.DarkYellow;
                         Console.WriteLine(maga);
                         Console.ResetColor();
-                        Console.WriteLine();
-                        Console.WriteLine("                   _.-.");
-                        Console.WriteLine("                .-'%%~%'.");
-                        Console.WriteLine("             _.'%%¨_.'-._\\");
-                        Console.WriteLine("           .'%%%%~|      '");
-                        Console.WriteLine("          '%¨%%%%%-");
-                        Console.WriteLine(".________/_________\\_______.");
-                        Console.WriteLine(" ¨¨°¨°¨¨            ¨°¨¨¨°¨");
+
+                        //DRAW MAGE
+                        GraphicFunc.Mage();
+
                         while (noacabat)
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
@@ -427,26 +613,10 @@ namespace GameProject {
                         Console.WriteLine(druida);
                         Console.ResetColor();
                         Console.WriteLine();
-                        Console.WriteLine(" .  .  .");
-                        Console.WriteLine("/ \\/ \\/ \\");
-                        Console.WriteLine("\\_     _/");
-                        Console.WriteLine("  \\_ _/");
-                        Console.WriteLine("   | |");
-                        Console.WriteLine("   | |");
-                        Console.WriteLine("   | |");
-                        Console.WriteLine("   | |");
-                        Console.WriteLine("   | |");
-                        Console.WriteLine("   | |");
-                        Console.WriteLine("   | |");
-                        Console.WriteLine("   | |");
-                        Console.WriteLine("   | |");
-                        Console.WriteLine("   | |");
-                        Console.WriteLine("   | |");
-                        Console.WriteLine("   | |");
-                        Console.WriteLine("   |_|");
-                        Console.WriteLine("   ( )");
-                        Console.WriteLine("  _/ \\_");
-                        Console.WriteLine(" /_____\\");
+
+                        //DRAW DRUID
+                        GraphicFunc.Druid();
+
                         Console.WriteLine();
                         while (noacabat)
                         {
@@ -514,31 +684,10 @@ namespace GameProject {
                 bool monstreNoAcabat = true;
                 count = 0;
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine(@"
-                                                                  ,--,  ,.-.
-                                   ,                   \,       '-,-`,'-.' | ._
-                                  /|           \    ,   |\         }  )/  / `-,'
-                                  [ ,          |\  /|   | |        /  \|  |/`  ,`
-                                  | |       ,.`  `,` `, | |  _,...(   (      .',
-                                  \  \  __ ,-` `  ,  , `/ |,'      Y     (   /_L\
-                                   \  \_\,``,   ` , ,  /  |         )         _,/
-                                    \  '  `  ,_ _`_,-,<._.<        /         /
-                                     ', `>.,`  `  `   ,., |_      |         /
-                                       \/`  `,   `   ,`  | /__,.-`    _,   `\
-                                   -,-..\  _  \  `  /  ,  / `._) _,-\`       \
-                                    \_,,.) /\    ` /  / ) (-,, ``    ,        |
-                                   ,` )  | \_\       '-`  |  `(               \
-                                  /  /```(   , --, ,' \   |`<`    ,            |
-                                 /  /_,--`\   <\  V /> ,` )<_/)  | \      _____)
-                           ,-, ,`   `   (_,\ \    |   /) / __/  /   `----`
-                          (-, \           ) \ ('_.-._)/ /,`    /
-                          | /  `          `/ \\ V   V, /`     /
-                       ,--\(        ,     <_/`\\     ||      /
-                      (   ,``-     \/|         \-A.A-`|     /
-                     ,>,_ )_,..(    )\          -,,_-`  _--`
-                    (_ \|`   _,/_  /  \_            ,--`
-                     \( `   <.,../`     `-.._   _,-`
-                    ");
+
+                //DRAW MONSTER
+                GraphicFunc.Monster();
+
                 Console.ResetColor();
                 while (monstreNoAcabat)
                 {
@@ -602,14 +751,10 @@ namespace GameProject {
                     }
                 }
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine(@"
-                  ______   ______   .___  ___.  _______ .__   __.   ______  _______ .___  ___.     __          ___         .______        ___   .___________.    ___       __       __          ___       __ 
-                 /      | /  __  \  |   \/   | |   ____||  \ |  |  /      ||   ____||   \/   |    |  |        /   \        |   _  \      /   \  |           |   /   \     |  |     |  |        /   \     |  |
-                |  ,----'|  |  |  | |  \  /  | |  |__   |   \|  | |  ,----'|  |__   |  \  /  |    |  |       /  ^  \       |  |_)  |    /  ^  \ `---|  |----`  /  ^  \    |  |     |  |       /  ^  \    |  |
-                |  |     |  |  |  | |  |\/|  | |   __|  |  . `  | |  |     |   __|  |  |\/|  |    |  |      /  /_\  \      |   _  <    /  /_\  \    |  |      /  /_\  \   |  |     |  |      /  /_\  \   |  |
-                |  `----.|  `--'  | |  |  |  | |  |____ |  |\   | |  `----.|  |____ |  |  |  |    |  `----./  _____  \     |  |_)  |  /  _____  \   |  |     /  _____  \  |  `----.|  `----./  _____  \  |__|
-                 \______| \______/  |__|  |__| |_______||__| \__|  \______||_______||__|  |__|    |_______/__/     \__\    |______/  /__/     \__\  |__|    /__/     \__\ |_______||_______/__/     \__\ (__)
-                ");
+
+                //DRAW START BATTLE
+                GraphicFunc.StartBattle();
+
                 Console.ResetColor();
                 //variables i constantes batalla
                 const string mortArquera = "La arquera a perdut tota la vida i ha mort", mortBarbaro = "El  barbar  a perdut tota la vida i ha mort", mortMaga = "La maga a perdut tota la vida i ha mort", mortDruida = "El  druida  a perdut tota la vida i ha mort"; //mort herois
@@ -619,7 +764,7 @@ namespace GameProject {
                 int turn = 1, decArquera = 0, decBarbaro = 0, decMaga = 0, decDruida = 0; //decisiones de turnos
                 int countHabArquera = 6, countHabBarbaro = 6, countHabMaga = 6, countHabDruida = 6; //habilidades especiales contadores
                 int mortA = 0, mortB = 0, mortM = 0, mortD = 0; //contador para mensaje muerte
-                long skullCount = 5, timerSkull = 50000000; //timer
+                
                 int noqMonstre = 0, defHabBarbaro = 0, intents = 3;
                 const string stHab = "activa la seva habilitat especial i ", stHabArquera = "durant 2 torns el Monstre no podrà atacar", stHabBarbaro = "augmenta la seva defensa durant 3 torns", stHabMaga = "dispara una bola de foc i fa ", stHabDruida = "cura 500 de vida a ", stHabDruidaError = "No pots curar la vida si esta al màxim", stCura = "cura ", stVida = " de vida a ", hpActual = "Vida actual ", stHabDefBarb = "El bàrbar es defensa i no rep dany!"; //Habilidades especiales
                 float memArquera = atacArquera, memBarbaro = atacBarbaro, memMaga = atacMaga, memDruida = atacDruida, memMonstre = atacMonstre, danyHabMaga = atacMaga * 3; //memoria valors atac personatges
@@ -1030,79 +1175,10 @@ namespace GameProject {
                         Console.ReadLine();
                         Console.ResetColor();
                         Console.ForegroundColor = ConsoleColor.White;
-                        while(skullCount>0)
-                        {
-                            Console.WriteLine(@"
-                                                            ,--.
-                                                           {    }
-                                                           K,   }
-                                                          /  ~Y`
-                                                     ,   /   /
-                                                    {_'-K.__/
-                                                      `/-.__L._
-                                                      /  ' /`\_}
-                                                     /  ' /
-                                             ____   /  ' /
-                                      ,-'~~~~    ~~/  ' /_
-                                    ,'             ``~~~  ',
-                                   (                        Y
-                                  {                         I
-                                 {      -                    `,
-                                 |       ',                   )
-                                 |        |   ,..__      __. Y
-                                 |    .,_./  Y ' / ^Y   J   )|
-                                 \           |' /   |   |   ||
-                                  \          L_/    . _ (_,.'(
-                                   \,   ,      ^^""' / |      )
-                                     \_  \          /,L]     /
-                                       '-_~-,       ` `   ./`
-                                          `'{_            )
-                                              ^^\..___,.--`
 
-                            ");
-                            while(timerSkull>0)
-                            {
-                                timerSkull--;
-                            }
-                            Console.Clear();
-                            timerSkull = 50000000;
-                            Console.WriteLine(@"
-                                                                        ,--.
-                                                                       {    }
-                                                                       K,   }
-                                                                      /  ~Y`
-                                                                 ,   /   /
-                                                                {_'-K.__/
-                                                                  `/-.__L._
-                                                                  /  ' /`\_}
-                                                                 /  ' /
-                                                         ____   /  ' /
-                                                  ,-'~~~~    ~~/  ' /_
-                                                ,'             ``~~~  ',
-                                               (                        Y
-                                              {                         I
-                                             {      -                    `,
-                                             |       ',                   )
-                                             |        |   ,..__      __. Y
-                                             |    .,_./  Y ' / ^Y   J   )|
-                                             \           |' /   |   |   ||
-                                              \          L_/    . _ (_,.'(
-                                               \,   ,      ^^""' / |      )
-                                                 \_  \          /,L]     /
-                                                   '-_~-,       ` `   ./`
-                                                      `'{_            )
-                                                          ^^\..___,.--`
+                        //PRINT SCULL
+                        GraphicFunc.Skull();
 
-                            ");
-                            while (timerSkull > 0)
-                            {
-                                timerSkull--;
-                            }
-                            timerSkull = 50000000;
-                            Console.Clear();
-                            skullCount--;
-                        }
-                        skullCount = 5;
                         Console.ResetColor();
                         Console.ReadLine();
                         mortA++;
@@ -1115,79 +1191,10 @@ namespace GameProject {
                         Console.ReadLine();
                         Console.ResetColor();
                         Console.ForegroundColor = ConsoleColor.White;
-                        while (skullCount > 0)
-                        {
-                            Console.WriteLine(@"
-                                                            ,--.
-                                                           {    }
-                                                           K,   }
-                                                          /  ~Y`
-                                                     ,   /   /
-                                                    {_'-K.__/
-                                                      `/-.__L._
-                                                      /  ' /`\_}
-                                                     /  ' /
-                                             ____   /  ' /
-                                      ,-'~~~~    ~~/  ' /_
-                                    ,'             ``~~~  ',
-                                   (                        Y
-                                  {                         I
-                                 {      -                    `,
-                                 |       ',                   )
-                                 |        |   ,..__      __. Y
-                                 |    .,_./  Y ' / ^Y   J   )|
-                                 \           |' /   |   |   ||
-                                  \          L_/    . _ (_,.'(
-                                   \,   ,      ^^""' / |      )
-                                     \_  \          /,L]     /
-                                       '-_~-,       ` `   ./`
-                                          `'{_            )
-                                              ^^\..___,.--`
 
-                            ");
-                            while (timerSkull > 0)
-                            {
-                                timerSkull--;
-                            }
-                            Console.Clear();
-                            timerSkull = 50000000;
-                            Console.WriteLine(@"
-                                                                        ,--.
-                                                                       {    }
-                                                                       K,   }
-                                                                      /  ~Y`
-                                                                 ,   /   /
-                                                                {_'-K.__/
-                                                                  `/-.__L._
-                                                                  /  ' /`\_}
-                                                                 /  ' /
-                                                         ____   /  ' /
-                                                  ,-'~~~~    ~~/  ' /_
-                                                ,'             ``~~~  ',
-                                               (                        Y
-                                              {                         I
-                                             {      -                    `,
-                                             |       ',                   )
-                                             |        |   ,..__      __. Y
-                                             |    .,_./  Y ' / ^Y   J   )|
-                                             \           |' /   |   |   ||
-                                              \          L_/    . _ (_,.'(
-                                               \,   ,      ^^""' / |      )
-                                                 \_  \          /,L]     /
-                                                   '-_~-,       ` `   ./`
-                                                      `'{_            )
-                                                          ^^\..___,.--`
+                        //PRINT SCULL
+                        GraphicFunc.Skull();
 
-                            ");
-                            while (timerSkull > 0)
-                            {
-                                timerSkull--;
-                            }
-                            timerSkull = 50000000;
-                            Console.Clear();
-                            skullCount--;
-                        }
-                        skullCount = 5;
                         Console.ResetColor();
                         Console.ReadLine();
                         mortB++;
@@ -1200,79 +1207,10 @@ namespace GameProject {
                         Console.ReadLine();
                         Console.ResetColor();
                         Console.ForegroundColor = ConsoleColor.White;
-                        while (skullCount > 0)
-                        {
-                            Console.WriteLine(@"
-                                                            ,--.
-                                                           {    }
-                                                           K,   }
-                                                          /  ~Y`
-                                                     ,   /   /
-                                                    {_'-K.__/
-                                                      `/-.__L._
-                                                      /  ' /`\_}
-                                                     /  ' /
-                                             ____   /  ' /
-                                      ,-'~~~~    ~~/  ' /_
-                                    ,'             ``~~~  ',
-                                   (                        Y
-                                  {                         I
-                                 {      -                    `,
-                                 |       ',                   )
-                                 |        |   ,..__      __. Y
-                                 |    .,_./  Y ' / ^Y   J   )|
-                                 \           |' /   |   |   ||
-                                  \          L_/    . _ (_,.'(
-                                   \,   ,      ^^""' / |      )
-                                     \_  \          /,L]     /
-                                       '-_~-,       ` `   ./`
-                                          `'{_            )
-                                              ^^\..___,.--`
 
-                            ");
-                            while (timerSkull > 0)
-                            {
-                                timerSkull--;
-                            }
-                            Console.Clear();
-                            timerSkull = 50000000;
-                            Console.WriteLine(@"
-                                                                        ,--.
-                                                                       {    }
-                                                                       K,   }
-                                                                      /  ~Y`
-                                                                 ,   /   /
-                                                                {_'-K.__/
-                                                                  `/-.__L._
-                                                                  /  ' /`\_}
-                                                                 /  ' /
-                                                         ____   /  ' /
-                                                  ,-'~~~~    ~~/  ' /_
-                                                ,'             ``~~~  ',
-                                               (                        Y
-                                              {                         I
-                                             {      -                    `,
-                                             |       ',                   )
-                                             |        |   ,..__      __. Y
-                                             |    .,_./  Y ' / ^Y   J   )|
-                                             \           |' /   |   |   ||
-                                              \          L_/    . _ (_,.'(
-                                               \,   ,      ^^""' / |      )
-                                                 \_  \          /,L]     /
-                                                   '-_~-,       ` `   ./`
-                                                      `'{_            )
-                                                          ^^\..___,.--`
+                        //PRINT SCULL
+                        GraphicFunc.Skull();
 
-                            ");
-                            while (timerSkull > 0)
-                            {
-                                timerSkull--;
-                            }
-                            timerSkull = 50000000;
-                            Console.Clear();
-                            skullCount--;
-                        }
-                        skullCount = 5;
                         Console.ResetColor();
                         Console.ReadLine();
                         mortM++;
@@ -1285,79 +1223,10 @@ namespace GameProject {
                         Console.ReadLine();
                         Console.ResetColor();
                         Console.ForegroundColor = ConsoleColor.White;
-                        while (skullCount > 0)
-                        {
-                            Console.WriteLine(@"
-                                                            ,--.
-                                                           {    }
-                                                           K,   }
-                                                          /  ~Y`
-                                                     ,   /   /
-                                                    {_'-K.__/
-                                                      `/-.__L._
-                                                      /  ' /`\_}
-                                                     /  ' /
-                                             ____   /  ' /
-                                      ,-'~~~~    ~~/  ' /_
-                                    ,'             ``~~~  ',
-                                   (                        Y
-                                  {                         I
-                                 {      -                    `,
-                                 |       ',                   )
-                                 |        |   ,..__      __. Y
-                                 |    .,_./  Y ' / ^Y   J   )|
-                                 \           |' /   |   |   ||
-                                  \          L_/    . _ (_,.'(
-                                   \,   ,      ^^""' / |      )
-                                     \_  \          /,L]     /
-                                       '-_~-,       ` `   ./`
-                                          `'{_            )
-                                              ^^\..___,.--`
 
-                            ");
-                            while (timerSkull > 0)
-                            {
-                                timerSkull--;
-                            }
-                            Console.Clear();
-                            timerSkull = 50000000;
-                            Console.WriteLine(@"
-                                                                        ,--.
-                                                                       {    }
-                                                                       K,   }
-                                                                      /  ~Y`
-                                                                 ,   /   /
-                                                                {_'-K.__/
-                                                                  `/-.__L._
-                                                                  /  ' /`\_}
-                                                                 /  ' /
-                                                         ____   /  ' /
-                                                  ,-'~~~~    ~~/  ' /_
-                                                ,'             ``~~~  ',
-                                               (                        Y
-                                              {                         I
-                                             {      -                    `,
-                                             |       ',                   )
-                                             |        |   ,..__      __. Y
-                                             |    .,_./  Y ' / ^Y   J   )|
-                                             \           |' /   |   |   ||
-                                              \          L_/    . _ (_,.'(
-                                               \,   ,      ^^""' / |      )
-                                                 \_  \          /,L]     /
-                                                   '-_~-,       ` `   ./`
-                                                      `'{_            )
-                                                          ^^\..___,.--`
+                        //PRINT SCULL
+                        GraphicFunc.Skull();
 
-                            ");
-                            while (timerSkull > 0)
-                            {
-                                timerSkull--;
-                            }
-                            timerSkull = 50000000;
-                            Console.Clear();
-                            skullCount--;
-                        }
-                        skullCount = 5;
                         Console.ResetColor();
                         Console.ReadLine();
                         mortD++;
@@ -1374,40 +1243,10 @@ namespace GameProject {
                 {
                     Console.ReadLine();
                     Console.ForegroundColor = ConsoleColor.Cyan;
-                    Console.WriteLine(@"
 
-                        ┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-                        │                                                                                                                                                                          │
-                        │  ███████╗███████╗██╗     ██╗ ██████╗██╗████████╗ █████╗ ████████╗███████╗    ██╗  ██╗ █████╗ ███████╗     ██████╗ ██╗   ██╗ █████╗ ███╗   ██╗██╗   ██╗ █████╗ ████████╗  │
-                        │  ██╔════╝██╔════╝██║     ██║██╔════╝██║╚══██╔══╝██╔══██╗╚══██╔══╝██╔════╝    ██║  ██║██╔══██╗██╔════╝    ██╔════╝ ██║   ██║██╔══██╗████╗  ██║╚██╗ ██╔╝██╔══██╗╚══██╔══╝  │
-                        │  █████╗  █████╗  ██║     ██║██║     ██║   ██║   ███████║   ██║   ███████╗    ███████║███████║███████╗    ██║  ███╗██║   ██║███████║██╔██╗ ██║ ╚████╔╝ ███████║   ██║     │
-                        │  ██╔══╝  ██╔══╝  ██║     ██║██║     ██║   ██║   ██╔══██║   ██║   ╚════██║    ██╔══██║██╔══██║╚════██║    ██║   ██║██║   ██║██╔══██║██║╚██╗██║  ╚██╔╝  ██╔══██║   ██║     │
-                        │  ██║     ███████╗███████╗██║╚██████╗██║   ██║   ██║  ██║   ██║   ███████║    ██║  ██║██║  ██║███████║    ╚██████╔╝╚██████╔╝██║  ██║██║ ╚████║   ██║   ██║  ██║   ██║     │
-                        │  ╚═╝     ╚══════╝╚══════╝╚═╝ ╚═════╝╚═╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝   ╚══════╝    ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝     ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝     │
-                        │                                                                                                                                                                          │
-                        └──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
-                    ");
-                    Console.ResetColor();
-                    Console.WriteLine();
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine(@"    
-                                                                                                             _______________
-                                                                                                            |@@@@|     |####|
-                                                                                                            |@@@@|     |####|
-                                                                                                            |@@@@|     |####|
-                                                                                                            \@@@@| ITB |####/
-                                                                                                             \@@@|     |###/
-                                                                                                              `@@|_____|##'
-                                                                                                                   (O)
-                                                                                                                .-'''''-.
-                                                                                                              .'  * * *  `.
-                                                                                                             :  *       *  :
-                                                                                                            : ~ G U A N Y ~ :
-                                                                                                            : ~ A D O R ! ~ :
-                                                                                                             :  *       *  :
-                                                                                                              `.  * * *  .'
-                                                                                                                `-.....-'
-                    ");
+                    //PRINT WIN
+                    GraphicFunc.Win();
+
                     Console.ResetColor();
                         Console.ReadLine();
                     Console.Clear();
@@ -1433,30 +1272,10 @@ namespace GameProject {
                 if (hpArquera<=0 && hpBarbaro<=0 && hpMaga<=0 && hpDruida<=0)
                 {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
-                    Console.WriteLine(@"
 
+                    //PRINT LOSE MESSAGE
+                    GraphicFunc.Lose();
 
-                             .+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+. 
-                            (                                                                                                             )
-                             )                                                                                                           ( 
-                            (                                                                                                             )
-                             )      ██░ ██  ▄▄▄        ██████     ██▓███  ▓█████  ██▀███  ▓█████▄  █    ██ ▄▄▄█████▓                     ( 
-                            (      ▓██░ ██▒▒████▄    ▒██    ▒    ▓██░  ██▒▓█   ▀ ▓██ ▒ ██▒▒██▀ ██▌ ██  ▓██▒▓  ██▒ ▓▒                      )
-                             )     ▒██▀▀██░▒██  ▀█▄  ░ ▓██▄      ▓██░ ██▓▒▒███   ▓██ ░▄█ ▒░██   █▌▓██  ▒██░▒ ▓██░ ▒░                     ( 
-                            (      ░▓█ ░██ ░██▄▄▄▄██   ▒   ██▒   ▒██▄█▓▒ ▒▒▓█  ▄ ▒██▀▀█▄  ░▓█▄   ▌▓▓█  ░██░░ ▓██▓ ░                       )
-                             )     ░▓█▒░██▓ ▓█   ▓██▒▒██████▒▒   ▒██▒ ░  ░░▒████▒░██▓ ▒██▒░▒████▓ ▒▒█████▓   ▒██▒ ░  ██▓  ██▓  ██▓       ( 
-                            (       ▒ ░░▒░▒ ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░   ▒▓▒░ ░  ░░░ ▒░ ░░ ▒▓ ░▒▓░ ▒▒▓  ▒ ░▒▓▒ ▒ ▒   ▒ ░░    ▒▓▒  ▒▓▒  ▒▓▒        )
-                             )      ▒ ░▒░ ░  ▒   ▒▒ ░░ ░▒  ░ ░   ░▒ ░      ░ ░  ░  ░▒ ░ ▒░ ░ ▒  ▒ ░░▒░ ░ ░     ░     ░▒   ░▒   ░▒        ( 
-                            (       ░  ░░ ░  ░   ▒   ░  ░  ░     ░░          ░     ░░   ░  ░ ░  ░  ░░░ ░ ░   ░       ░    ░    ░          )
-                             )      ░  ░  ░      ░  ░      ░                 ░  ░   ░        ░       ░                ░    ░    ░        ( 
-                            (                                                              ░                          ░    ░    ░         )
-                             )                                                                                                           ( 
-                            (                                                                                                             )
-                             )                                                                                                           ( 
-                            (                                                                                                             )
-                             ""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+"" 
-
-                    ");
                     Console.ResetColor();
                     Console.ReadLine();
                     Console.Clear();
@@ -1497,4 +1316,3 @@ namespace GameProject {
 
 
 
-//si has leido hasta aqui y te ha gustado el programa, ponme un mensajito positivo :)
