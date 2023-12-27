@@ -1,5 +1,7 @@
 using System;
+using System.Diagnostics.Metrics;
 using System.Security.Cryptography.X509Certificates;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace GameProject 
 {
@@ -347,26 +349,76 @@ namespace GameProject
             Console.WriteLine(Medal);   
         }
     }
-    
+    public static class Func
+    {
+        public static float[] EasyHardMode(float m1, float m2,  float m3,  float m4)
+        {
+            float[] array = new float[4];
+            array[0] = m1;
+            array[1] = m2;
+            array[2] = m3;
+            array[3] = m4;
+            return array;
+        }
+        public static float[] EasyHardMode(float m1, float m2, float m3, bool monster)
+        {
+
+            float[] array = new float[3];
+            array[0] = m1;
+            array[1] = m2;
+            array[2] = m3;
+            return array;
+        }
+
+        public static float[] RandomMode(float min1, float max1, float min2, float max2, float min3, float max3, float min4, float max4)
+        {
+            Random random = new Random();
+            float[] array = new float[4];
+            array[0] = (float)random.Next((int)min1, (int)max1 + 1);
+            array[1] = (float)random.Next((int)min2, (int)max2 + 1);
+            array[2] = (float)random.Next((int)min3, (int)max3 + 1);
+            array[3] = (float)random.Next((int)min4, (int)max4 + 1);
+            return array;
+        }
+        public static float[] RandomMode(float min1, float max1, float min2, float max2, float min3, float max3, bool monster)
+        {
+            Random random = new Random();
+            float[] array = new float[3];
+            array[0] = (float)random.Next((int)min1, (int)max1 + 1);
+            array[1] = (float)random.Next((int)min2, (int)max2 + 1);
+            array[2] = (float)random.Next((int)min3, (int)max3 + 1);
+            return array;
+        }
+
+
+    }
+
+
     class SanzDavidCode
     {
         public static void Main()
         {
-            int numStart, count, countGeneral, countInicial = 0;
-            //STATS
-            float hpArquera = 0, defArquera = 0, hpBarbaro = 0, defBarbaro = 0, hpMaga = 0, defMaga = 0, hpDruida = 0, defDruida = 0, hpMonstre = 0, defMonstre = 0, atacArquera = 0, atacBarbaro = 0, atacMaga = 0, atacDruida = 0, atacMonstre = 0;
-            //rangs personatges
-            const int minVidaArquera = 1500, maxVidaArquera = 2000, minAtacArquera = 180, maxAtacArquera = 300, minDefensaArquera = 25, maxDefensaArquera = 40;
+            const int minVidaArquera = 1500, maxVidaArquera = 2000, minAtacArquera = 200, maxAtacArquera = 300, minDefensaArquera = 25, maxDefensaArquera = 35;
             const int minVidaBarbaro = 3000, maxVidaBarbaro = 3750, minAtacBarbaro = 150, maxAtacBarbaro = 250, minDefensaBarbaro = 35, maxDefensaBarbaro = 45;
-            const int minVidaMaga = 1000, maxVidaMaga = 1500, minAtacMaga = 300, maxAtacMaga = 350, minDefensaMaga = 20, maxDefensaMaga = 35;
+            const int minVidaMaga = 1100, maxVidaMaga = 1500, minAtacMaga = 300, maxAtacMaga = 400, minDefensaMaga = 20, maxDefensaMaga = 35;
             const int minVidaDruida = 2000, maxVidaDruida = 2500, minAtacDruida = 70, maxAtacDruida = 120, minDefensaDruida = 25, maxDefensaDruida = 40;
-            const int minVidaMonstre = 9000, maxVidaMonstre = 12000, minAtacMonstre = 250, maxAtacMonstre = 4000, minDefensaMonstre = 20, maxDefensaMonstre = 30;
-            const string Vida = "Vida", Atac = "Atac", Defensa = "Defensa", Error = "Els valors que has establert no hi són dins dels paràmetres";
+            const int minVidaMonstre = 7000, maxVidaMonstre = 10000, minAtacMonstre = 300, maxAtacMonstre = 400, minDefensaMonstre = 20, maxDefensaMonstre = 30;
+
+            float[] arrayHP = new float[4], arrayAttack = new float[4], arrayDeff = new float[4], arrayMonster = new float[3];
+            float numStart, countInicial = 0, dificultselector;
+            
+            bool monster = true;
+            float hpArquera = 0, defArquera = 0, hpBarbaro = 0, defBarbaro = 0, hpMaga = 0, defMaga = 0, hpDruida = 0, defDruida = 0, hpMonstre = 0, defMonstre = 0, atacArquera = 0, atacBarbaro = 0, atacMaga = 0, atacDruida = 0, atacMonstre = 0;
             const string monstre = "Monstre ", arquera = "Arquera ", barbaro = "Bàrbar ", maga = "Maga ", druida = "Druida "; //noms strings
+            string Names;
+            string[] arrayNombres;
+
+            
 
             //SHOW WELCOME
             GraphicFunc.DrawWelcome(); 
             
+            //CHOOSE PLAY OR LEAVE
             numStart = Convert.ToInt32(Console.ReadLine());
             while (numStart != 0 && numStart != 1)
             {
@@ -383,376 +435,47 @@ namespace GameProject
                 Console.Clear();
                 Console.ResetColor();
                 Console.WriteLine("Perfecte. Comencem a crear personatges!");
-                count = 0;
-                countGeneral = 0;
-                for (int i = 0; i < 4; i++)
+                Console.ReadKey();
+                Console.WriteLine("Escriu el nom dels 4 personatges");
+                Names = Console.ReadLine();
+                arrayNombres = Names.Split(','); //store the names in an array
+                Console.WriteLine("Quin nivell de dificultat vols?");
+                Console.WriteLine("1.Fàcil\t2.Dificil\t3.Personalitzat\t4.Random");
+                do
                 {
-                    if (i == 0)
-                    {
-                        bool noacabat = true;
-                        Console.WriteLine();
-                        Console.ForegroundColor = ConsoleColor.DarkYellow;
-                        Console.WriteLine(arquera);
-                        Console.ResetColor();
-
-                        //DRAW ARCHER
-                        GraphicFunc.Archer();
-
-                        while (noacabat)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write(Vida + ": [1500-2000]: ");
-                            Console.ResetColor();
-                            hpArquera = Convert.ToInt32(Console.ReadLine());
-                            if (hpArquera < minVidaArquera || hpArquera > maxVidaArquera)
-                            {
-                                Console.ForegroundColor = ConsoleColor.DarkRed;
-                                Console.WriteLine(Error);
-                                Console.ResetColor();
-                                count++;
-                            }
-                            else
-                            {
-                                bool atok = false;
-                                bool dfok = false;
-                                while (count < 3 && atok == false)
-                                {
-                                    Console.ForegroundColor = ConsoleColor.Green;
-                                    Console.Write(Atac + ": [180-300]: ");
-                                    Console.ResetColor();
-                                    atacArquera = Convert.ToInt32(Console.ReadLine());
-                                    if (atacArquera < minAtacArquera || atacArquera > maxAtacArquera)
-                                        {
-                                        Console.ForegroundColor = ConsoleColor.DarkRed;
-                                        Console.WriteLine(Error);
-                                        Console.ResetColor();
-                                        count++;
-                                    }
-                                    else atok = true;
-                                }
-                                while (atok && count < 3 && dfok == false)
-                                {
-                                    Console.ForegroundColor = ConsoleColor.Blue;
-                                    Console.Write(Defensa + ": [25-40]: ");
-                                    Console.ResetColor();
-                                    defArquera = Convert.ToInt32(Console.ReadLine());
-                                    if (defArquera < minDefensaArquera || defArquera > maxDefensaArquera)
-                                    {
-                                        Console.ForegroundColor = ConsoleColor.DarkRed;
-                                        Console.WriteLine(Error);
-                                        Console.ResetColor();
-                                        count++;
-                                    }
-                                    else dfok = true;
-                                }
-                                if (count < 3) noacabat = false; Console.Clear();
-                                defArquera = 1 - (defArquera / 100); //defensa del monstre en valor percentual
-                            }
-                            if (count >= 3)
-                            {
-                                count = 0;
-                                countGeneral++;
-                            }
-                            if (countGeneral >= 3) Main();
-                        }
-                    }
-                    else if (i == 1)
-                    {
-                        count = 0;
-                        Console.Clear();
-                        bool noacabat = true;
-                        Console.WriteLine();
-                        Console.ForegroundColor = ConsoleColor.DarkYellow;
-                        Console.WriteLine(barbaro);
-                        Console.ResetColor();
-                        Console.WriteLine();
-
-                        //DRAW BARBARIAN
-                        GraphicFunc.Barbarian();
-
-                        Console.WriteLine();
-                        while (noacabat)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write(Vida + ": [3000-3750]: ");
-                            Console.ResetColor();
-                            hpBarbaro = Convert.ToInt32(Console.ReadLine());
-                            if (hpBarbaro < minVidaBarbaro || hpBarbaro > maxVidaBarbaro)
-                            {
-                                Console.ForegroundColor = ConsoleColor.DarkRed;
-                                Console.WriteLine(Error);
-                                Console.ResetColor();
-                                count++;
-                            }
-                            else
-                            {
-                                bool atok = false;
-                                bool dfok = false;
-                                while (count < 3 && atok == false)
-                                {
-                                    Console.ForegroundColor = ConsoleColor.Green;
-                                    Console.Write(Atac + ": [150-250]: ");
-                                    Console.ResetColor();
-                                    atacBarbaro = Convert.ToInt32(Console.ReadLine());
-                                    if (atacBarbaro < minAtacBarbaro || atacBarbaro > maxAtacBarbaro)
-                                    {
-                                        Console.ForegroundColor = ConsoleColor.DarkRed;
-                                        Console.WriteLine(Error);
-                                        Console.ResetColor();
-                                        count++;
-                                    }
-                                    else atok = true;
-                                }
-                                while (atok && count < 3 && dfok == false)
-                                {
-                                    Console.ForegroundColor = ConsoleColor.Blue;
-                                    Console.Write(Defensa + ": [35-45]: ");
-                                    Console.ResetColor();
-                                    defBarbaro = Convert.ToInt32(Console.ReadLine());
-                                    if (defBarbaro < minDefensaBarbaro || defBarbaro > maxDefensaBarbaro)
-                                    {
-                                        Console.ForegroundColor = ConsoleColor.DarkRed;
-                                        Console.WriteLine(Error);
-                                        Console.ResetColor();
-                                        count++;
-                                    }
-                                    else dfok = true;
-                                }
-                                if (count < 3) noacabat = false; Console.Clear();
-                                defBarbaro = 1 - (defBarbaro / 100); //defensa del monstre en valor percentual
-                            }
-                            if (count >= 3)
-                            {
-                                count = 0;
-                                countGeneral++;
-                            }
-                            if (countGeneral >= 3) Main();
-                        }
-                        Console.WriteLine();
-                        Console.Clear(); 
-                    }
-                    else if (i == 2)
-                    {
-                        count = 0;
-                        Console.ReadLine();
-                        Console.Clear();
-                        bool noacabat = true;
-                        Console.WriteLine();
-                        Console.ForegroundColor = ConsoleColor.DarkYellow;
-                        Console.WriteLine(maga);
-                        Console.ResetColor();
-
-                        //DRAW MAGE
-                        GraphicFunc.Mage();
-
-                        while (noacabat)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write(Vida + ": [1000-1500]: ");
-                            Console.ResetColor();
-                            hpMaga = Convert.ToInt32(Console.ReadLine());
-                            if (hpMaga < minVidaMaga || hpMaga > maxVidaMaga)
-                            {
-                                Console.ForegroundColor = ConsoleColor.DarkRed;
-                                Console.WriteLine(Error);
-                                Console.ResetColor();
-                                count++;
-                            }
-                            else
-                            {
-                                bool atok = false;
-                                bool dfok = false;
-                                while (count < 3 && atok == false)
-                                {
-                                    Console.ForegroundColor = ConsoleColor.Green;
-                                    Console.Write(Atac + ": [300-350]: ");
-                                    Console.ResetColor();
-                                    atacMaga = Convert.ToInt32(Console.ReadLine());
-                                    if (atacMaga < minAtacMaga || atacMaga > maxAtacMaga)
-                                    {
-                                        Console.ForegroundColor = ConsoleColor.DarkRed;
-                                        Console.WriteLine(Error);
-                                        Console.ResetColor();
-                                        count++;
-                                    }
-                                    else atok = true;
-                                }
-                                while (atok && count < 3 && dfok == false)
-                                {
-                                    Console.ForegroundColor = ConsoleColor.Blue;
-                                    Console.Write(Defensa + ": [20-35]: ");
-                                    Console.ResetColor();
-                                    defMaga = Convert.ToInt32(Console.ReadLine());
-                                    if (defMaga < minDefensaMaga || defMaga > maxDefensaMaga)
-                                    {
-                                        Console.ForegroundColor = ConsoleColor.DarkRed;
-                                        Console.WriteLine(Error);
-                                        Console.ResetColor();
-                                        count++;
-                                    }
-                                    else dfok = true;
-                                }
-                                if (count < 3) noacabat = false; Console.Clear();
-                                defMaga = 1 - (defMaga / 100); //defensa del monstre en valor percentual
-                            }
-                            if (count >= 3)
-                            {
-                                count = 0;
-                                countGeneral++;
-                            }
-                            if (countGeneral >= 3) Main();
-                        }
-                    }
-                    else if (i == 3)
-                    {
-                        count = 0;
-                        Console.Clear();
-                        bool noacabat = true;
-                        Console.WriteLine();
-                        Console.ForegroundColor = ConsoleColor.DarkYellow;
-                        Console.WriteLine(druida);
-                        Console.ResetColor();
-                        Console.WriteLine();
-
-                        //DRAW DRUID
-                        GraphicFunc.Druid();
-
-                        Console.WriteLine();
-                        while (noacabat)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write(Vida + ": [2000-2500]: ");
-                            Console.ResetColor();
-                            hpDruida = Convert.ToInt32(Console.ReadLine());
-                            if (hpDruida < minVidaDruida || hpDruida > maxVidaDruida)
-                            {
-                                Console.ForegroundColor = ConsoleColor.DarkRed;
-                                Console.WriteLine(Error);
-                                Console.ResetColor();
-                                count++;
-                            }
-                            else
-                            {
-                                bool atok = false;
-                                bool dfok = false;
-                                while (count < 3 && atok == false)
-                                {
-                                    Console.ForegroundColor = ConsoleColor.Green;
-                                    Console.Write(Atac + ": [70-120]: ");
-                                    Console.ResetColor();
-                                    atacDruida = Convert.ToInt32(Console.ReadLine());
-                                    if (atacDruida < minAtacDruida || atacDruida > maxAtacDruida)
-                                    {
-                                        Console.ForegroundColor = ConsoleColor.DarkRed;
-                                        Console.WriteLine(Error);
-                                        Console.ResetColor();
-                                        count++;
-                                    }
-                                    else atok = true;
-                                }
-                                while (atok && count < 3 && dfok == false)
-                                {
-                                    Console.ForegroundColor = ConsoleColor.Blue;
-                                    Console.Write(Defensa + ": [25-40]: ");
-                                    Console.ResetColor();
-                                    defDruida = Convert.ToInt32(Console.ReadLine());
-                                    if (defDruida < minDefensaDruida || defDruida > maxDefensaDruida)
-                                    {
-                                        Console.ForegroundColor = ConsoleColor.DarkRed;
-                                        Console.WriteLine(Error);
-                                        Console.ResetColor();
-                                        count++;
-                                    }
-                                    else dfok = true;
-                                }
-                                if (count < 3) noacabat = false; Console.Clear();
-                                defDruida = 1 - (defDruida / 100); //defensa del monstre en valor percentual
-                            }
-                            if (count >= 3)
-                            {
-                                count = 0;
-                                countGeneral++;
-                            }
-                            if (countGeneral >= 3) Main();
-                        }
-                    }
-                }
-                Console.WriteLine();
-                Console.WriteLine("Tots els personatges han estat creats correctament!");
-                Console.WriteLine();
-                Console.WriteLine("Estableix les estadistíques del monstre!");
-                bool monstreNoAcabat = true;
-                count = 0;
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-
-                //DRAW MONSTER
-                GraphicFunc.Monster();
-
-                Console.ResetColor();
-                while (monstreNoAcabat)
+                    dificultselector = Convert.ToInt32(Console.ReadLine());
+                } while (dificultselector != 1 && dificultselector != 2 && dificultselector != 3 && dificultselector != 4);
+                switch (dificultselector)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write(Vida + ": [9000-12000]: ");
-                    Console.ResetColor();
-                    hpMonstre = Convert.ToInt32(Console.ReadLine());
-                    if (hpMonstre < minVidaMonstre || hpMonstre > maxVidaMonstre)
-                    {
-                        Console.ForegroundColor = ConsoleColor.DarkRed;
-                        Console.WriteLine(Error);
-                        Console.ResetColor();
-                        count++;
-                    }
-                    else
-                    {
-                        bool atok = false;
-                        bool dfok = false;
-                        while (count < 3 && atok == false)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.Write(Atac + ": [250-400]: ");
-                            Console.ResetColor();
-                            atacMonstre = Convert.ToInt32(Console.ReadLine());
-                            if (atacMonstre < minAtacMonstre || atacMonstre > maxAtacMonstre)
-                            {
-                                Console.ForegroundColor = ConsoleColor.DarkRed;
-                                Console.WriteLine(Error);
-                                Console.ResetColor();
-                                count++;
-                            }
-                            else atok = true;
-                        }
-                        while (atok && count < 3 && dfok == false)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Blue;
-                            Console.Write(Defensa + ": [20-30]: ");
-                            Console.ResetColor();
-                            defMonstre = Convert.ToInt32(Console.ReadLine());
-                            if (defMonstre < minDefensaMonstre || defMonstre > maxDefensaMonstre)
-                            {
-                                Console.ForegroundColor = ConsoleColor.DarkRed;
-                                Console.WriteLine(Error);
-                                Console.ResetColor();
-                                count++;
-                            }
-                            else dfok = true;
-                        }
-                        defMonstre = 1 - (defMonstre / 100); //defensa del monstre en valor percentual
-                        if (count < 3)
-                        {
-                            monstreNoAcabat = false;
-                            Console.Clear();
-                        }
-                        else if (count >= 3)
-                        {
-                            count = 0;
-                            countGeneral++;
-                        }
-                        if (countGeneral >= 3) Main();
-                    }
+                    case 1:
+                        arrayHP = Func.EasyHardMode(maxVidaArquera, maxVidaBarbaro, maxVidaMaga, maxVidaDruida);
+                        arrayAttack = Func.EasyHardMode(maxAtacArquera, maxAtacBarbaro, maxAtacMaga, maxAtacDruida);
+                        arrayDeff = Func.EasyHardMode(maxDefensaArquera, maxDefensaBarbaro, maxDefensaMaga, maxDefensaDruida);
+                        arrayMonster = Func.EasyHardMode(minVidaMonstre, minAtacMonstre, minDefensaMonstre, monster);
+
+                    break;
+
+                    case 2:
+                        arrayHP = Func.EasyHardMode(minVidaArquera, minVidaBarbaro, minVidaMaga, minVidaDruida);
+                        arrayAttack = Func.EasyHardMode(minAtacArquera, minAtacBarbaro, minAtacMaga, minAtacDruida);
+                        arrayDeff = Func.EasyHardMode(minDefensaArquera, minDefensaBarbaro, minDefensaMaga, minDefensaDruida);
+                        arrayMonster = Func.EasyHardMode(maxVidaMonstre, maxAtacMonstre, maxDefensaMonstre, monster);
+                        break;
+
+                    case 3:
+                        //Func.CostumizeMode();
+                    break;
+
+                    case 4:
+                        arrayHP = Func.RandomMode(minVidaArquera, maxVidaArquera, minVidaBarbaro, maxVidaBarbaro, minVidaMaga, maxVidaMaga, minVidaDruida, maxVidaDruida);
+                        arrayAttack = Func.RandomMode(minAtacArquera, maxAtacArquera, minAtacBarbaro, maxAtacBarbaro, minAtacMaga, maxAtacMaga, minAtacDruida, maxAtacDruida);
+                        arrayDeff = Func.RandomMode(minDefensaArquera,maxDefensaArquera, minDefensaBarbaro, maxDefensaBarbaro, minDefensaMaga, maxDefensaMaga, minDefensaDruida, maxDefensaDruida);
+                        arrayMonster = Func.RandomMode(minVidaMonstre, maxVidaMonstre, minAtacMonstre, maxAtacMonstre, minDefensaMonstre, maxDefensaMonstre, monster);
+                    break;
                 }
                 Console.ForegroundColor = ConsoleColor.Cyan;
 
-                //DRAW START BATTLE
+                //START BATTLE
                 GraphicFunc.StartBattle();
 
                 Console.ResetColor();
