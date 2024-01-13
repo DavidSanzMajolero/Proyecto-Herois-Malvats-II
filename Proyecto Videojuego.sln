@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proyecto Videojuego", "Proyecto Videojuego\Proyecto Videojuego.csproj", "{F17B5A1C-3870-4D77-AF24-CB709396B620}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proyecto Videojuego", "Proyecto Videojuego\Proyecto Videojuego.csproj", "{F17B5A1C-3870-4D77-AF24-CB709396B620}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graphs", "Graphs\Graphs.csproj", "{8AB29103-FA53-4B4A-8048-729D07A622E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModeFunctions", "ModeFunctions\ModeFunctions.csproj", "{FD3D6DBE-05F8-4E92-8758-534F77F550CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{F17B5A1C-3870-4D77-AF24-CB709396B620}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F17B5A1C-3870-4D77-AF24-CB709396B620}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F17B5A1C-3870-4D77-AF24-CB709396B620}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AB29103-FA53-4B4A-8048-729D07A622E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AB29103-FA53-4B4A-8048-729D07A622E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AB29103-FA53-4B4A-8048-729D07A622E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AB29103-FA53-4B4A-8048-729D07A622E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD3D6DBE-05F8-4E92-8758-534F77F550CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD3D6DBE-05F8-4E92-8758-534F77F550CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD3D6DBE-05F8-4E92-8758-534F77F550CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD3D6DBE-05F8-4E92-8758-534F77F550CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
