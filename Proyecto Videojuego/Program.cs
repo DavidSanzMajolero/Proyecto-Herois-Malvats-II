@@ -1,3 +1,5 @@
+using Graphs;
+using ModeFunctions;
 using System;
 using System.Diagnostics.Metrics;
 using System.Security.Cryptography.X509Certificates;
@@ -5,395 +7,6 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace GameProject 
 {
-
-    public static class GraphicFunc
-    {
-        public static void DrawWelcome()
-        {
-            const string Intro = "Pressiona INTRO per saltar la pantalla en negre", OpenTerminal = "Obre la terminal per a una millor experiencia...", Choose = "Què vols fer?", Play = "Jugar (0)", Leave = "Sortir (1)";
-            const string Screen = $@"
-                             ···························································································
-                             :                                                                                         :
-                             : ██████╗ ███████╗███╗   ██╗██╗   ██╗██╗███╗   ██╗ ██████╗ ██╗   ██╗████████╗     █████╗  :
-                             : ██╔══██╗██╔════╝████╗  ██║██║   ██║██║████╗  ██║██╔════╝ ██║   ██║╚══██╔══╝    ██╔══██╗ :
-                             : ██████╔╝█████╗  ██╔██╗ ██║██║   ██║██║██╔██╗ ██║██║  ███╗██║   ██║   ██║       ███████║ :
-                             : ██╔══██╗██╔══╝  ██║╚██╗██║╚██╗ ██╔╝██║██║╚██╗██║██║   ██║██║   ██║   ██║       ██╔══██║ :
-                             : ██████╔╝███████╗██║ ╚████║ ╚████╔╝ ██║██║ ╚████║╚██████╔╝╚██████╔╝   ██║       ██║  ██║ :
-                             : ╚═════╝ ╚══════╝╚═╝  ╚═══╝  ╚═══╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝  ╚═════╝    ╚═╝       ╚═╝  ╚═╝ :
-                             :                                                                                         :
-                             : ██╗  ██╗███████╗██████╗  ██████╗ ██╗███████╗    ██╗   ██╗███████╗                       :
-                             : ██║  ██║██╔════╝██╔══██╗██╔═══██╗██║██╔════╝    ██║   ██║██╔════╝                       :
-                             : ███████║█████╗  ██████╔╝██║   ██║██║███████╗    ██║   ██║███████╗                       :
-                             : ██╔══██║██╔══╝  ██╔══██╗██║   ██║██║╚════██║    ╚██╗ ██╔╝╚════██║                       :
-                             : ██║  ██║███████╗██║  ██║╚██████╔╝██║███████║     ╚████╔╝ ███████║                       :
-                             : ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝╚══════╝      ╚═══╝  ╚══════╝                       :
-                             :                                                                                         :
-                             : ███╗   ███╗ ██████╗ ███╗   ██╗███████╗████████╗██████╗ ███████╗███████╗                 :
-                             : ████╗ ████║██╔═══██╗████╗  ██║██╔════╝╚══██╔══╝██╔══██╗██╔════╝██╔════╝                 :
-                             : ██╔████╔██║██║   ██║██╔██╗ ██║███████╗   ██║   ██████╔╝█████╗  ███████╗                 :
-                             : ██║╚██╔╝██║██║   ██║██║╚██╗██║╚════██║   ██║   ██╔══██╗██╔══╝  ╚════██║                 :
-                             : ██║ ╚═╝ ██║╚██████╔╝██║ ╚████║███████║   ██║   ██║  ██║███████╗███████║                 :
-                             : ╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚══════╝                 :
-                             :                                                                                         :
-                             ···························································································
-            ";
-            const string Pc = @"
-                                                                    _________________
-                                                                   |                 |
-                                                                   |   ___________   |
-                                                                   |  |  Jugar 0  |  |
-                         ______________________________________    |  |___________|  |
-                        |  __________________________________  |   |   ___________   |
-                        | |                                  | |   |  |  Sortir 1 |  |
-                        | |       MONSTRES VS HEROIS         | |   |  |___________|  |
-                        | |              _  _                | |   |   __   __   _   |
-                        | |            (_>()<_)              | |   |  |__| |__| |_|  |
-                        | |             (_/\_)               | |   |                 |
-                        | |               ||                 | |   |                 |
-                        | |             | || |               | |   |                 |
-                        | |            __\||/__              | |   |                 |
-                        | |                                  | |   |       .|.       |
-                        | |                                  | |   |      (   )      |
-                        | |                  By David Sanz   | |   |       '-'       |
-                        | |__________________________________| |   |                 |
-                        |______________________________________|   |                 |
-                                         |    |      '.            |                 |
-                                         |    |        '-.-'-.-'-.-|                 |
-                                         )    (                    |                 |
-                                        /      \                   |                 |
-                                       /________\                  |_________________|
-            ";
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine(Screen);
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(Intro);
-            Console.ResetColor();
-            Console.ReadLine();
-            Console.WriteLine(OpenTerminal);
-            Console.ReadLine();
-            Console.Clear();
-            Console.ResetColor();
-            Console.WriteLine(Choose);
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(Play);
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(Leave);
-            Console.ResetColor();
-            Console.ForegroundColor = ConsoleColor.Gray;
-            Console.Write(Pc);
-            Console.ResetColor();
-        }
-        public static void Archer()
-        {
-            const string Archer = @"          
-                           4$$-.                                          
-                           4   "".                                       
-                           4    ^.                                       
-                           4     $                                       
-                           4     'b                                      
-                           4      ""b.                                   
-                           4        $                                    
-                           4        $r                                   
-                           4        $F                                   
-                -$b========0========$b====*P=->>                         
-                           4       *$$F                                 
-                           4        $$""                                
-                           4       .$F                                  
-                           4       dP                                   
-                           4      F                                     
-                           4     @                                      
-                           4    .                                       
-                           J.  .                                         
-                          '$$
-            ";
-            Console.WriteLine(Archer);
-        }
-        public static void Barbarian()
-        {
-            const string Barbarian = @"
-                                       /\  |\
-                                     __)(__) \
-                                    (__{}__   >
-                                       ||  ) /
-                                       ||  |/
-                                       ||
-                                       ||
-                                       ||
-                                       ||
-                                       ||
-                                       /\
-                                      '--'";
-            Console.WriteLine(Barbarian);
-        }
-        public static void Mage()
-        {
-            const string Mage = @"
-                                        _.-.
-                                    .-'%%~%'.
-                                 _.'%%¨_.'-._\
-                               .'%%%%~|      '
-                              '%¨%%%%%-
-                    .________/_________\_______.
-                     ¨¨°¨°¨¨            ¨°¨¨¨°¨";
-            Console.WriteLine(Mage);
-        }
-        public static void Druid()
-        {
-            const string Druid =@"  
-                                    .   .   .
-                                   / \\/ \\/ \
-                                   \\_     _//
-                                     \\_ _//
-                                       | |
-                                       | |
-                                       | |
-                                       | |
-                                       | |
-                                       | |
-                                       | |
-                                       | |
-                                       | |
-                                       | |
-                                       | |
-                                       | |
-                                       | |
-                                       |_| 
-                                       ( )
-                                      _/ \_
-                                     /_____\ ";
-            Console.WriteLine(Druid);
-        }
-        public static void Monster()
-        {
-            const string Monster = @"
-                                                                  ,--,  ,.-.
-                                   ,                   \,       '-,-`,'-.' | ._
-                                  /|           \    ,   |\         }  )/  / `-,'
-                                  [ ,          |\  /|   | |        /  \|  |/`  ,`
-                                  | |       ,.`  `,` `, | |  _,...(   (      .',
-                                  \  \  __ ,-` `  ,  , `/ |,'      Y     (   /_L\
-                                   \  \_\,``,   ` , ,  /  |         )         _,/
-                                    \  '  `  ,_ _`_,-,<._.<        /         /
-                                     ', `>.,`  `  `   ,., |_      |         /
-                                       \/`  `,   `   ,`  | /__,.-`    _,   `\
-                                   -,-..\  _  \  `  /  ,  / `._) _,-\`       \
-                                    \_,,.) /\    ` /  / ) (-,, ``    ,        |
-                                   ,` )  | \_\       '-`  |  `(               \
-                                  /  /```(   , --, ,' \   |`<`    ,            |
-                                 /  /_,--`\   <\  V /> ,` )<_/)  | \      _____)
-                           ,-, ,`   `   (_,\ \    |   /) / __/  /   `----`
-                          (-, \           ) \ ('_.-._)/ /,`    /
-                          | /  `          `/ \\ V   V, /`     /
-                       ,--\(        ,     <_/`\\     ||      /
-                      (   ,``-     \/|         \-A.A-`|     /
-                     ,>,_ )_,..(    )\          -,,_-`  _--`
-                    (_ \|`   _,/_  /  \_            ,--`
-                     \( `   <.,../`     `-.._   _,-` ";
-            Console.WriteLine(Monster);
-        }
-        public static void StartBattle()
-        {
-            const string StartBattle = @"
-                  ______   ______   .___  ___.  _______ .__   __.   ______  _______ .___  ___.     __          ___         .______        ___   .___________.    ___       __       __          ___       __ 
-                 /      | /  __  \  |   \/   | |   ____||  \ |  |  /      ||   ____||   \/   |    |  |        /   \        |   _  \      /   \  |           |   /   \     |  |     |  |        /   \     |  |
-                |  ,----'|  |  |  | |  \  /  | |  |__   |   \|  | |  ,----'|  |__   |  \  /  |    |  |       /  ^  \       |  |_)  |    /  ^  \ `---|  |----`  /  ^  \    |  |     |  |       /  ^  \    |  |
-                |  |     |  |  |  | |  |\/|  | |   __|  |  . `  | |  |     |   __|  |  |\/|  |    |  |      /  /_\  \      |   _  <    /  /_\  \    |  |      /  /_\  \   |  |     |  |      /  /_\  \   |  |
-                |  `----.|  `--'  | |  |  |  | |  |____ |  |\   | |  `----.|  |____ |  |  |  |    |  `----./  _____  \     |  |_)  |  /  _____  \   |  |     /  _____  \  |  `----.|  `----./  _____  \  |__|
-                 \______| \______/  |__|  |__| |_______||__| \__|  \______||_______||__|  |__|    |_______/__/     \__\    |______/  /__/     \__\  |__|    /__/     \__\ |_______||_______/__/     \__\ (__)
-                ";
-            Console.WriteLine(StartBattle);
-        }
-        public static void Skull()
-        {
-            long skullCount = 5, timerSkull = 50000000; 
-            while (skullCount > 0)
-            {
-                Console.WriteLine(@"
-                                                            ,--.
-                                                           {    }
-                                                           K,   }
-                                                          /  ~Y`
-                                                     ,   /   /
-                                                    {_'-K.__/
-                                                      `/-.__L._
-                                                      /  ' /`\_}
-                                                     /  ' /
-                                             ____   /  ' /
-                                      ,-'~~~~    ~~/  ' /_
-                                    ,'             ``~~~  ',
-                                   (                        Y
-                                  {                         I
-                                 {      -                    `,
-                                 |       ',                   )
-                                 |        |   ,..__      __. Y
-                                 |    .,_./  Y ' / ^Y   J   )|
-                                 \           |' /   |   |   ||
-                                  \          L_/    . _ (_,.'(
-                                   \,   ,      ^^""' / |      )
-                                     \_  \          /,L]     /
-                                       '-_~-,       ` `   ./`
-                                          `'{_            )
-                                              ^^\..___,.--`
-
-                            ");
-                while (timerSkull > 0)
-                {
-                    timerSkull--;
-                }
-                Console.Clear();
-                timerSkull = 50000000;
-                Console.WriteLine(@"
-                                                                        ,--.
-                                                                       {    }
-                                                                       K,   }
-                                                                      /  ~Y`
-                                                                 ,   /   /
-                                                                {_'-K.__/
-                                                                  `/-.__L._
-                                                                  /  ' /`\_}
-                                                                 /  ' /
-                                                         ____   /  ' /
-                                                  ,-'~~~~    ~~/  ' /_
-                                                ,'             ``~~~  ',
-                                               (                        Y
-                                              {                         I
-                                             {      -                    `,
-                                             |       ',                   )
-                                             |        |   ,..__      __. Y
-                                             |    .,_./  Y ' / ^Y   J   )|
-                                             \           |' /   |   |   ||
-                                              \          L_/    . _ (_,.'(
-                                               \,   ,      ^^""' / |      )
-                                                 \_  \          /,L]     /
-                                                   '-_~-,       ` `   ./`
-                                                      `'{_            )
-                                                          ^^\..___,.--`
-
-                            ");
-                while (timerSkull > 0)
-                {
-                    timerSkull--;
-                }
-                timerSkull = 50000000;
-                Console.Clear();
-                skullCount--;
-            }
-            skullCount = 5;
-        }
-        public static void Lose()
-        {
-            const string Lose = @"
-
-
-                             .+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+. 
-                            (                                                                                                             )
-                             )                                                                                                           ( 
-                            (                                                                                                             )
-                             )      ██░ ██  ▄▄▄        ██████     ██▓███  ▓█████  ██▀███  ▓█████▄  █    ██ ▄▄▄█████▓                     ( 
-                            (      ▓██░ ██▒▒████▄    ▒██    ▒    ▓██░  ██▒▓█   ▀ ▓██ ▒ ██▒▒██▀ ██▌ ██  ▓██▒▓  ██▒ ▓▒                      )
-                             )     ▒██▀▀██░▒██  ▀█▄  ░ ▓██▄      ▓██░ ██▓▒▒███   ▓██ ░▄█ ▒░██   █▌▓██  ▒██░▒ ▓██░ ▒░                     ( 
-                            (      ░▓█ ░██ ░██▄▄▄▄██   ▒   ██▒   ▒██▄█▓▒ ▒▒▓█  ▄ ▒██▀▀█▄  ░▓█▄   ▌▓▓█  ░██░░ ▓██▓ ░                       )
-                             )     ░▓█▒░██▓ ▓█   ▓██▒▒██████▒▒   ▒██▒ ░  ░░▒████▒░██▓ ▒██▒░▒████▓ ▒▒█████▓   ▒██▒ ░  ██▓  ██▓  ██▓       ( 
-                            (       ▒ ░░▒░▒ ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░   ▒▓▒░ ░  ░░░ ▒░ ░░ ▒▓ ░▒▓░ ▒▒▓  ▒ ░▒▓▒ ▒ ▒   ▒ ░░    ▒▓▒  ▒▓▒  ▒▓▒        )
-                             )      ▒ ░▒░ ░  ▒   ▒▒ ░░ ░▒  ░ ░   ░▒ ░      ░ ░  ░  ░▒ ░ ▒░ ░ ▒  ▒ ░░▒░ ░ ░     ░     ░▒   ░▒   ░▒        ( 
-                            (       ░  ░░ ░  ░   ▒   ░  ░  ░     ░░          ░     ░░   ░  ░ ░  ░  ░░░ ░ ░   ░       ░    ░    ░          )
-                             )      ░  ░  ░      ░  ░      ░                 ░  ░   ░        ░       ░                ░    ░    ░        ( 
-                            (                                                              ░                          ░    ░    ░         )
-                             )                                                                                                           ( 
-                            (                                                                                                             )
-                             )                                                                                                           ( 
-                            (                                                                                                             )
-                             ""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+""+.+"" 
-
-                    ";
-            Console.WriteLine(Lose);
-        }
-        public static void Win()
-        {
-            const string Congrats =@"
-
-                        ┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-                        │                                                                                                                                                                          │
-                        │  ███████╗███████╗██╗     ██╗ ██████╗██╗████████╗ █████╗ ████████╗███████╗    ██╗  ██╗ █████╗ ███████╗     ██████╗ ██╗   ██╗ █████╗ ███╗   ██╗██╗   ██╗ █████╗ ████████╗  │
-                        │  ██╔════╝██╔════╝██║     ██║██╔════╝██║╚══██╔══╝██╔══██╗╚══██╔══╝██╔════╝    ██║  ██║██╔══██╗██╔════╝    ██╔════╝ ██║   ██║██╔══██╗████╗  ██║╚██╗ ██╔╝██╔══██╗╚══██╔══╝  │
-                        │  █████╗  █████╗  ██║     ██║██║     ██║   ██║   ███████║   ██║   ███████╗    ███████║███████║███████╗    ██║  ███╗██║   ██║███████║██╔██╗ ██║ ╚████╔╝ ███████║   ██║     │
-                        │  ██╔══╝  ██╔══╝  ██║     ██║██║     ██║   ██║   ██╔══██║   ██║   ╚════██║    ██╔══██║██╔══██║╚════██║    ██║   ██║██║   ██║██╔══██║██║╚██╗██║  ╚██╔╝  ██╔══██║   ██║     │
-                        │  ██║     ███████╗███████╗██║╚██████╗██║   ██║   ██║  ██║   ██║   ███████║    ██║  ██║██║  ██║███████║    ╚██████╔╝╚██████╔╝██║  ██║██║ ╚████║   ██║   ██║  ██║   ██║     │
-                        │  ╚═╝     ╚══════╝╚══════╝╚═╝ ╚═════╝╚═╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝   ╚══════╝    ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝     ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝     │
-                        │                                                                                                                                                                          │
-                        └──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
-                    ";
-            const string Medal =@"    
-                                                                                                             _______________
-                                                                                                            |@@@@|     |####|
-                                                                                                            |@@@@|     |####|
-                                                                                                            |@@@@|     |####|
-                                                                                                            \@@@@| ITB |####/
-                                                                                                             \@@@|     |###/
-                                                                                                              `@@|_____|##'
-                                                                                                                   (O)
-                                                                                                                .-'''''-.
-                                                                                                              .'  * * *  `.
-                                                                                                             :  *       *  :
-                                                                                                            : ~ G U A N Y ~ :
-                                                                                                            : ~ A D O R ! ~ :
-                                                                                                             :  *       *  :
-                                                                                                              `.  * * *  .'
-                                                                                                                `-.....-'
-                    ";
-            Console.WriteLine(Congrats);
-            Console.ResetColor();
-            Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(Medal);   
-        }
-    }
-    public static class Func
-    {
-        public static float[] EasyHardMode(float m1, float m2,  float m3,  float m4)
-        {
-            float[] array = new float[4];
-            array[0] = m1;
-            array[1] = m2;
-            array[2] = m3;
-            array[3] = m4;
-            return array;
-        }
-        public static float[] EasyHardMode(float m1, float m2, float m3, bool monster)
-        {
-
-            float[] array = new float[3];
-            array[0] = m1;
-            array[1] = m2;
-            array[2] = m3;
-            return array;
-        }
-
-        public static float[] RandomMode(float min1, float max1, float min2, float max2, float min3, float max3, float min4, float max4)
-        {
-            Random random = new Random();
-            float[] array = new float[4];
-            array[0] = (float)random.Next((int)min1, (int)max1 + 1);
-            array[1] = (float)random.Next((int)min2, (int)max2 + 1);
-            array[2] = (float)random.Next((int)min3, (int)max3 + 1);
-            array[3] = (float)random.Next((int)min4, (int)max4 + 1);
-            return array;
-        }
-        public static float[] RandomMode(float min1, float max1, float min2, float max2, float min3, float max3, bool monster)
-        {
-            Random random = new Random();
-            float[] array = new float[3];
-            array[0] = (float)random.Next((int)min1, (int)max1 + 1);
-            array[1] = (float)random.Next((int)min2, (int)max2 + 1);
-            array[2] = (float)random.Next((int)min3, (int)max3 + 1);
-            return array;
-        }
-
-
-    }
-
-
     class SanzDavidCode
     {
         public static void Main()
@@ -404,6 +17,10 @@ namespace GameProject
             const int minVidaDruida = 2000, maxVidaDruida = 2500, minAtacDruida = 70, maxAtacDruida = 120, minDefensaDruida = 25, maxDefensaDruida = 40;
             const int minVidaMonstre = 7000, maxVidaMonstre = 10000, minAtacMonstre = 300, maxAtacMonstre = 400, minDefensaMonstre = 20, maxDefensaMonstre = 30;
 
+            const string ParametresVida = "Vida HEROIS: \nARQUERA: [1500-2000] \nBÀRBAR: [3000-3750] \nMAGA: [1100-1500] \nDRUIDA: [2000-2500]";
+            const string ParametresAtac = "Atac HEROIS: \nARQUERA: [200-300] \nBÀRBAR: [150-250] \nMAGA: [300-400] \nDRUIDA: [70-120]";
+            const string ParametresDefensa = "Defensa HEROIS: \nARQUERA: [25-35]% \nBÀRBAR: [35-45]% \nMAGA: [20-35]% \nDRUIDA: [25-45]%";
+
             float[] arrayHP = new float[4], arrayAttack = new float[4], arrayDeff = new float[4], arrayMonster = new float[3];
             float numStart, countInicial = 0, dificultselector;
             
@@ -413,10 +30,9 @@ namespace GameProject
             string Names;
             string[] arrayNombres;
 
-            
 
             //SHOW WELCOME
-            GraphicFunc.DrawWelcome(); 
+            GraphicFunc.DrawWelcome();
             
             //CHOOSE PLAY OR LEAVE
             numStart = Convert.ToInt32(Console.ReadLine());
@@ -429,6 +45,7 @@ namespace GameProject
                 numStart = Convert.ToInt32(Console.ReadLine());
                 Console.ResetColor();
             }
+            
             countInicial = 0;
             while (numStart == 0)
             {
@@ -437,10 +54,10 @@ namespace GameProject
                 Console.WriteLine("Perfecte. Comencem a crear personatges!");
                 Console.ReadKey();
                 Console.WriteLine("Escriu el nom dels 4 personatges");
-                Names = Console.ReadLine();
+                Names = Console.ReadLine(); 
                 arrayNombres = Names.Split(','); //store the names in an array
                 Console.WriteLine("Quin nivell de dificultat vols?");
-                Console.WriteLine("1.Fàcil\t2.Dificil\t3.Personalitzat\t4.Random");
+                Console.WriteLine("1.Fàcil \t2.Dificil \t3.Personalitzat \t4.Random");
                 do
                 {
                     dificultselector = Convert.ToInt32(Console.ReadLine());
@@ -448,30 +65,47 @@ namespace GameProject
                 switch (dificultselector)
                 {
                     case 1:
-                        arrayHP = Func.EasyHardMode(maxVidaArquera, maxVidaBarbaro, maxVidaMaga, maxVidaDruida);
-                        arrayAttack = Func.EasyHardMode(maxAtacArquera, maxAtacBarbaro, maxAtacMaga, maxAtacDruida);
-                        arrayDeff = Func.EasyHardMode(maxDefensaArquera, maxDefensaBarbaro, maxDefensaMaga, maxDefensaDruida);
-                        arrayMonster = Func.EasyHardMode(minVidaMonstre, minAtacMonstre, minDefensaMonstre, monster);
+                        arrayHP = ModeFunc.EasyHardMode(maxVidaArquera, maxVidaBarbaro, maxVidaMaga, maxVidaDruida);
+                        arrayAttack = ModeFunc.EasyHardMode(maxAtacArquera, maxAtacBarbaro, maxAtacMaga, maxAtacDruida);
+                        arrayDeff = ModeFunc.EasyHardMode(maxDefensaArquera, maxDefensaBarbaro, maxDefensaMaga, maxDefensaDruida);
+                        arrayMonster = ModeFunc.EasyHardMode(minVidaMonstre, minAtacMonstre, minDefensaMonstre, monster);
 
                     break;
 
                     case 2:
-                        arrayHP = Func.EasyHardMode(minVidaArquera, minVidaBarbaro, minVidaMaga, minVidaDruida);
-                        arrayAttack = Func.EasyHardMode(minAtacArquera, minAtacBarbaro, minAtacMaga, minAtacDruida);
-                        arrayDeff = Func.EasyHardMode(minDefensaArquera, minDefensaBarbaro, minDefensaMaga, minDefensaDruida);
-                        arrayMonster = Func.EasyHardMode(maxVidaMonstre, maxAtacMonstre, maxDefensaMonstre, monster);
+                        arrayHP = ModeFunc.EasyHardMode(minVidaArquera, minVidaBarbaro, minVidaMaga, minVidaDruida);
+                        arrayAttack = ModeFunc.EasyHardMode(minAtacArquera, minAtacBarbaro, minAtacMaga, minAtacDruida);
+                        arrayDeff = ModeFunc.EasyHardMode(minDefensaArquera, minDefensaBarbaro, minDefensaMaga, minDefensaDruida);
+                        arrayMonster = ModeFunc.EasyHardMode(maxVidaMonstre, maxAtacMonstre, maxDefensaMonstre, monster);
                         break;
 
                     case 3:
-                        //Func.CostumizeMode();
-                    break;
+                        Console.WriteLine(ParametresVida);
+                        arrayHP = ModeFunc.CustomizeMode(minVidaArquera, maxVidaArquera, minVidaBarbaro, maxVidaBarbaro, minVidaMaga, maxVidaMaga, minVidaDruida, maxVidaDruida);
+                        Console.WriteLine(ParametresAtac);
+                        arrayAttack = ModeFunc.CustomizeMode(minAtacArquera, maxAtacArquera, minAtacBarbaro, maxAtacBarbaro, minAtacMaga, maxAtacMaga, minAtacDruida, maxAtacDruida);
+                        Console.WriteLine(ParametresDefensa);
+                        arrayDeff = ModeFunc.CustomizeMode(minDefensaArquera, maxDefensaArquera, minDefensaBarbaro, maxDefensaBarbaro, minDefensaMaga, maxDefensaMaga, minDefensaDruida, maxDefensaDruida);
+                        break;
 
                     case 4:
-                        arrayHP = Func.RandomMode(minVidaArquera, maxVidaArquera, minVidaBarbaro, maxVidaBarbaro, minVidaMaga, maxVidaMaga, minVidaDruida, maxVidaDruida);
-                        arrayAttack = Func.RandomMode(minAtacArquera, maxAtacArquera, minAtacBarbaro, maxAtacBarbaro, minAtacMaga, maxAtacMaga, minAtacDruida, maxAtacDruida);
-                        arrayDeff = Func.RandomMode(minDefensaArquera,maxDefensaArquera, minDefensaBarbaro, maxDefensaBarbaro, minDefensaMaga, maxDefensaMaga, minDefensaDruida, maxDefensaDruida);
-                        arrayMonster = Func.RandomMode(minVidaMonstre, maxVidaMonstre, minAtacMonstre, maxAtacMonstre, minDefensaMonstre, maxDefensaMonstre, monster);
+                        arrayHP = ModeFunc.RandomMode(minVidaArquera, maxVidaArquera, minVidaBarbaro, maxVidaBarbaro, minVidaMaga, maxVidaMaga, minVidaDruida, maxVidaDruida);
+                        arrayAttack = ModeFunc.RandomMode(minAtacArquera, maxAtacArquera, minAtacBarbaro, maxAtacBarbaro, minAtacMaga, maxAtacMaga, minAtacDruida, maxAtacDruida);
+                        arrayDeff = ModeFunc.RandomMode(minDefensaArquera,maxDefensaArquera, minDefensaBarbaro, maxDefensaBarbaro, minDefensaMaga, maxDefensaMaga, minDefensaDruida, maxDefensaDruida);
+                        arrayMonster = ModeFunc.RandomMode(minVidaMonstre, maxVidaMonstre, minAtacMonstre, maxAtacMonstre, minDefensaMonstre, maxDefensaMonstre, monster);
                     break;
+                }
+                for (int i = 0; i < arrayHP.Length; i++) 
+                {
+                    Console.WriteLine(arrayHP[i]);
+                }
+                for (int i = 0; i < arrayAttack.Length; i++)
+                {
+                    Console.WriteLine(arrayAttack[i]);
+                }
+                for (int i = 0; i < arrayDeff.Length; i++)
+                {
+                    Console.WriteLine(arrayDeff[i]);
                 }
                 Console.ForegroundColor = ConsoleColor.Cyan;
 
