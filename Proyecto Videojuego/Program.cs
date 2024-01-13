@@ -80,12 +80,21 @@ namespace GameProject
                         break;
 
                     case 3:
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine(ParametresVida);
+                        Console.ResetColor();
                         arrayHP = ModeFunc.CustomizeMode(minVidaArquera, maxVidaArquera, minVidaBarbaro, maxVidaBarbaro, minVidaMaga, maxVidaMaga, minVidaDruida, maxVidaDruida);
+                        if (arrayHP.Length == 0) Main();
+                        Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine(ParametresAtac);
+                        Console.ResetColor();
                         arrayAttack = ModeFunc.CustomizeMode(minAtacArquera, maxAtacArquera, minAtacBarbaro, maxAtacBarbaro, minAtacMaga, maxAtacMaga, minAtacDruida, maxAtacDruida);
+                        if (arrayHP.Length == 0) Main();
+                        Console.ForegroundColor = ConsoleColor.Blue;
                         Console.WriteLine(ParametresDefensa);
+                        Console.ResetColor();
                         arrayDeff = ModeFunc.CustomizeMode(minDefensaArquera, maxDefensaArquera, minDefensaBarbaro, maxDefensaBarbaro, minDefensaMaga, maxDefensaMaga, minDefensaDruida, maxDefensaDruida);
+                        if (arrayHP.Length == 0) Main();
                         break;
 
                     case 4:
@@ -95,6 +104,7 @@ namespace GameProject
                         arrayMonster = ModeFunc.RandomMode(minVidaMonstre, maxVidaMonstre, minAtacMonstre, maxAtacMonstre, minDefensaMonstre, maxDefensaMonstre, monster);
                     break;
                 }
+                //COMPROBATION OF THE ARRAYS
                 for (int i = 0; i < arrayHP.Length; i++) 
                 {
                     Console.WriteLine(arrayHP[i]);
