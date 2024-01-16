@@ -2,6 +2,22 @@
 
 namespace ModeFunctions
 {
+    public static class StringNames
+    {
+        public static bool Comprobation (string names)
+        {
+            if (names.Length > 7 && names.Contains(",")) return true;
+            else return false;  
+        }
+        public static string [] StringArray (string names)
+        {
+            string namesNoVoids = "";
+            string[] array = new string[names.Length];
+            namesNoVoids = names.Replace(" ", "");
+            array = namesNoVoids.Split (',');
+            return array;
+        }
+    }
     public static class ModeFunc
     {
         public static float[] EasyHardMode(float m1, float m2, float m3, float m4)
