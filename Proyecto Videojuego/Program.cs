@@ -27,7 +27,7 @@ namespace GameProject
             bool monster = true;
             float hpArquera = 0, defArquera = 0, hpBarbaro = 0, defBarbaro = 0, hpMaga = 0, defMaga = 0, hpDruida = 0, defDruida = 0, hpMonstre = 0, defMonstre = 0, atacArquera = 0, atacBarbaro = 0, atacMaga = 0, atacDruida = 0, atacMonstre = 0;
             const string monstre = "Monstre ", arquera = "Arquera ", barbaro = "Bàrbar ", maga = "Maga ", druida = "Druida "; //noms strings
-            string Names;
+            string names;
             string[] arrayNombres;
 
 
@@ -53,9 +53,18 @@ namespace GameProject
                 Console.ResetColor();
                 Console.WriteLine("Perfecte. Comencem a crear personatges!");
                 Console.ReadKey();
-                Console.WriteLine("Escriu el nom dels 4 personatges");
-                Names = Console.ReadLine(); 
-                arrayNombres = Names.Split(','); //store the names in an array
+                do
+                {
+                    Console.WriteLine("Escriu el nom dels 4 personatges");
+                    names = Console.ReadLine()??"";
+                    arrayNombres = StringNames.StringArray(names);
+
+                } while (!StringNames.Comprobation(names) || arrayNombres.Length != 4);
+                
+                for (int i = 0; i < arrayNombres.Length; i++)
+                {
+                    Console.WriteLine(arrayNombres[i]);
+                }
                 Console.WriteLine("Quin nivell de dificultat vols?");
                 Console.WriteLine("1.Fàcil \t2.Dificil \t3.Personalitzat \t4.Random");
                 do
