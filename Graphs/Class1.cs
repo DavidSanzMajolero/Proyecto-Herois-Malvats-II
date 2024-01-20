@@ -200,7 +200,7 @@
             }
             public static void Skull()
             {
-                long skullCount = 5, timerSkull = 50000000;
+                long skullCount = 5, timerSkull = 500000000;
                 while (skullCount > 0)
                 {
                     Console.WriteLine(@"
@@ -269,11 +269,10 @@
                     {
                         timerSkull--;
                     }
-                    timerSkull = 50000000;
+                    timerSkull = 500000000;
                     Console.Clear();
                     skullCount--;
                 }
-                skullCount = 5;
             }
             public static void Lose()
             {
