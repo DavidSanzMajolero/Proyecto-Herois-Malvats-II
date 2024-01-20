@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FightLibrary\FightLibrary.csproj" />
     <ProjectReference Include="..\Graphs\Graphs.csproj" />
     <ProjectReference Include="..\ModeFunctions\ModeFunctions.csproj" />
   </ItemGroup>
