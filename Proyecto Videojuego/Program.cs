@@ -18,32 +18,34 @@ namespace GameProject
             const int minVidaDruida = 2000, maxVidaDruida = 2500, minAtacDruida = 70, maxAtacDruida = 120, minDefensaDruida = 25, maxDefensaDruida = 40;
             const int minVidaMonstre = 7000, maxVidaMonstre = 10000, minAtacMonstre = 300, maxAtacMonstre = 400, minDefensaMonstre = 20, maxDefensaMonstre = 30;
 
+            const string Error01 = "El numero a de ser [0] o [1]";
             const string ParametresVida = "Vida HEROIS: \nARQUERA: [1500-2000] \nBÀRBAR: [3000-3750] \nMAGA: [1100-1500] \nDRUIDA: [2000-2500]";
             const string ParametresAtac = "Atac HEROIS: \nARQUERA: [200-300] \nBÀRBAR: [150-250] \nMAGA: [300-400] \nDRUIDA: [70-120]";
             const string ParametresDefensa = "Defensa HEROIS: \nARQUERA: [25-35]% \nBÀRBAR: [35-45]% \nMAGA: [20-35]% \nDRUIDA: [25-40]%";
             const string ParametresMonstre = "Vida: \n[7000-10000] \nAtac: [300-400] \nDefensa: [20-30]";
+            const string CreateCharacters = "Perfecte. Comencem a crear personatges!", AskNames = "Escriu el nom dels 4 personatges";
+            const string ChooseDifficult = "Quin nivell de dificultat vols?", Difficults = "1.Fàcil \t2.Dificil \t3.Personalitzat \t4.Random";
+            const string Error = "Els valors que has establert no hi són dins dels paràmetres", Leave = "Sortint del programa";
+            const string Choose = "Què vols fer?", Play = "1.Jugar", LeaveGame = "0.Sortir", CharacterCreated = "Els personatges creats son:";
 
             float[] arrayHP = new float[4], arrayAttack = new float[4], arrayDeff = new float[4], arrayMonster = new float[3];
             float numStart, countInicial = 0, dificultselector;
 
             bool monster = true;
-           
-            const string monstre = "Monstre ", arquera = "Arquera ", barbaro = "Bàrbar ", maga = "Maga ", druida = "Druida "; //noms strings
+            string[] CharacterNames = {"Arquera", "Bárbaro", "Maga", "Druida"};
+            const string monstre = "Monstre "; 
             string names;
             string[] arrayNombres;
 
 
-            //SHOW WELCOME
             GraphicFunc.DrawWelcome();
-
-            //CHOOSE PLAY OR LEAVE
             numStart = Convert.ToInt32(Console.ReadLine());
             while (numStart != 0 && numStart != 1)
             {
                 countInicial++;
                 if (countInicial >= 3) return;
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine("El numero a de ser [0] o [1]");
+                Console.WriteLine(Error01);
                 numStart = Convert.ToInt32(Console.ReadLine());
                 Console.ResetColor();
             }
@@ -53,22 +55,32 @@ namespace GameProject
             {
                 Console.Clear();
                 Console.ResetColor();
-                Console.WriteLine("Perfecte. Comencem a crear personatges!");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(CreateCharacters);
                 Console.ReadKey();
                 do
                 {
-                    Console.WriteLine("Escriu el nom dels 4 personatges");
+                    Console.WriteLine(AskNames);
+                    Console.ResetColor();
                     names = Console.ReadLine() ?? "";
                     arrayNombres = StringNames.StringArray(names);
 
                 } while (!StringNames.Comprobation(names) || arrayNombres.Length != 4);
-
+                Console.WriteLine(CharacterCreated);
                 for (int i = 0; i < arrayNombres.Length; i++)
                 {
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.WriteLine(CharacterNames[i]);
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
                     Console.WriteLine(arrayNombres[i]);
+                    Console.WriteLine();
+                    Console.ReadLine();
                 }
-                Console.WriteLine("Quin nivell de dificultat vols?");
-                Console.WriteLine("1.Fàcil \t2.Dificil \t3.Personalitzat \t4.Random");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(ChooseDifficult);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(Difficults);
+                Console.ResetColor();
                 do
                 {
                     dificultselector = Convert.ToInt32(Console.ReadLine());
@@ -94,7 +106,6 @@ namespace GameProject
 
                         int count = 0, countGen = 0;
                         bool comprobation = false;
-                        const string Error = "Els valors que has establert no hi són dins dels paràmetres";
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine(ParametresVida);
                         Console.ResetColor();
@@ -448,60 +459,49 @@ namespace GameProject
                         arrayMonster = ModeFunc.RandomMode(minVidaMonstre, maxVidaMonstre, minAtacMonstre, maxAtacMonstre, minDefensaMonstre, maxDefensaMonstre, monster);
                     break;
                 }
-
+                
                 for (int i = 0; i < arrayDeff.Length; i++)
                 {
                     arrayDeff[i] = 1 - (arrayDeff[i] / 100);
                 }
                 arrayMonster[2] = 1 - (arrayMonster[2] / 100);
 
-                for (int i = 0; i<arrayHP.Length; i++)
-                {
-                    Console.WriteLine(arrayHP[i]);
-                }
-                for (int i = 0; i < arrayAttack.Length; i++)
-                {
-                    Console.WriteLine(arrayAttack[i]);
-                }
-                for (int i = 0; i < arrayDeff.Length; i++)
-                {
-                    Console.WriteLine(arrayDeff[i]);
-                }
-                for (int i = 0; i < arrayMonster.Length; i++)
-                {
-                    Console.WriteLine(arrayMonster[i]);
-                }
-
                 Console.ForegroundColor = ConsoleColor.Cyan;
-
-                //START BATTLE
                 GraphicFunc.StartBattle();
-
                 Console.ResetColor();
-                //variables i constantes batalla
-                const string mortArquera = "La arquera a perdut tota la vida i ha mort", mortBarbaro = "El  barbar  a perdut tota la vida i ha mort", mortMaga = "La maga a perdut tota la vida i ha mort", mortDruida = "El  druida  a perdut tota la vida i ha mort"; //mort herois
-                const string HpRest = "Vida herois";
-                const string errorValors = "Els valors que has escrit estan malament, torna a escriure-ls", errorsEsgotats = "Errors esgotats, reiniciant programa";
-                const string selAccio = "Selecciona l'acció", atacar = "1.Atacar", protegirse = "2.Protegirse", habEspecial = "3.Habilitat especial";
-                const string defensaMonstre = "El monstre es defensa i rep només ", defensaArquera = "L'arquera es defensa i rep només ", defensaBarbaro = "El barbar es defensa i rep només ", defensaMaga = "La maga es defensa i rep només ", defensaDruida = "El druida es defensa i rep només ", danyGen = " de dany", dany = "ataca al Monstre amb ", danyAtacMonstre = "ataca amb ", restHp = "Vida restant de ", prote = "es protegeix i augmenta la seva defensa x2 pel pròxim atac", coolDown = "L'habilitat especial esta en refredament, espera a que passin 5 torns.  Torns actuals: ", stNoqMonstre = "El monstre esta noquejat i no podra atacar durant aquest torn"; //acciones switch
+                Console.ReadKey();
+                Console.Clear();
+                const string MortArquera = "La arquera a perdut tota la vida i ha mort", MortBarbaro = "El  barbar  a perdut tota la vida i ha mort", MortMaga = "La maga a perdut tota la vida i ha mort", MortDruida = "El  druida  a perdut tota la vida i ha mort";
+                const string HpRest = @"  
+  ,d88b.d88b,                       ,d88b.d88b,
+  88888888888                       88888888888
+  `Y8888888Y'  VIDA RESTANT HEROIS  `Y8888888Y' 
+    `Y888Y'                           `Y888Y'         
+      `Y'                               `Y'
+                    ";
+                const string Hearts = @"  
+  ,d88b.d88b,
+  88888888888
+  `Y8888888Y'
+    `Y888Y'
+      `Y'
+                    ";
+                const string ErrorValors = "Els valors que has escrit estan malament, torna a escriure-ls", ErrorsEsgotats = "Errors esgotats, reiniciant programa";
+                const string SelAccio = "Selecciona l'acció", Atacar = "1.Atacar", Protegirse = "2.Protegirse", HabEspecial = "3.Habilitat especial";
+                const string DefensaMonstre = "El monstre es defensa i rep només ", DefensaArquera = "L'arquera es defensa i rep només ", DefensaBarbaro = "El barbar es defensa i rep només ", DefensaMaga = "La maga es defensa i rep només ", DefensaDruida = "El druida es defensa i rep només ", DanyGen = " de dany", dany = "ataca al Monstre amb ", DanyAtacMonstre = "ataca amb ", RestHp = "Vida restant de ", prote = "es protegeix i augmenta la seva defensa x2 pel pròxim atac", coolDown = "L'habilitat especial esta en refredament, espera a que passin 5 torns.  Torns actuals: ", stNoqMonstre = "El monstre esta noquejat i no podra Atacar durant aquest torn";
                 const string MissAttack = "¡El ataque falló!", Critical = "¡Golpe crítico!", NormalAttack = "¡Ataque normal!";
-
-
-
-                int turn = 1, decArquera = 0, decBarbaro = 0, decMaga = 0, decDruida = 0; //decisiones de turnos
-                int countHabArquera = 6, countHabBarbaro = 6, countHabMaga = 6, countHabDruida = 6; //habilidades especiales contadores
-                int mortA = 0, mortB = 0, mortM = 0, mortD = 0; //contador para mensaje muerte
+                const string StHabDefBarb = "El bàrbar es defensa i no rep dany!", StHabArquera = "durant 2 torns el Monstre no podrà Atacar", StHabBarbaro = "augmenta la seva defensa durant 3 torns", StHabMaga = "dispara una bola de foc i fa ", StHabDruida = "cura 500 de vida a ", StHabDruidaError = "No pots curar la vida si esta al màxim", StCura = "cura ", StVida = " de vida a ", HpActual = "Vida actual ", stHab = "activa la seva habilitat especial i ";
+                int turn = 1, decArquera = 0, decBarbaro = 0, decMaga = 0, decDruida = 0;
+                int countHabArquera = 6, countHabBarbaro = 6, countHabMaga = 6, countHabDruida = 6;
+                int mortA = 0, mortB = 0, mortM = 0, mortD = 0;
                 const int minOne = 1, minThree = 3;
-
                 int noqMonstre = 0, defHabBarbaro = 0, intents = 3;
-                const string stHab = "activa la seva habilitat especial i ", stHabArquera = "durant 2 torns el Monstre no podrà atacar", stHabBarbaro = "augmenta la seva defensa durant 3 torns", stHabMaga = "dispara una bola de foc i fa ", stHabDruida = "cura 500 de vida a ", stHabDruidaError = "No pots curar la vida si esta al màxim", stCura = "cura ", stVida = " de vida a ", hpActual = "Vida actual ", stHabDefBarb = "El bàrbar es defensa i no rep dany!"; //Habilidades especiales
-                float memArquera = arrayAttack[0], memBarbaro = arrayAttack[1], memMaga = arrayAttack[2], memDruida = arrayAttack[3], memMonstre = arrayMonster[1], danyHabMaga = arrayAttack[2] * 3; //memoria valors atac personatges
-                float defMemArq = arrayDeff[0], defMemBarb = arrayDeff[1], defMemMaga = arrayDeff[2], defMemDruida = arrayDeff[3]; //memoria valors defensa personatges
-                float hpMemArq = arrayHP[0], hpMemBarb = arrayHP[1], hpMemMaga = arrayHP[2], hpMemDruida = arrayHP[3]; //memoria valors vida personatges
-                float stHpMemArq = 0, stHpMemBarb = 0, stHpMemMaga = 0, stHpMemDruida = 0; //memoria vida 2 (per printar misatges)
-
+                float memArquera = arrayAttack[0], memBarbaro = arrayAttack[1], memMaga = arrayAttack[2], memDruida = arrayAttack[3], memMonstre = arrayMonster[1], danyHabMaga = arrayAttack[2] * 3;
+                float defMemArq = arrayDeff[0], defMemBarb = arrayDeff[1], defMemMaga = arrayDeff[2], defMemDruida = arrayDeff[3]; 
+                float hpMemArq = arrayHP[0], hpMemBarb = arrayHP[1], hpMemMaga = arrayHP[2], hpMemDruida = arrayHP[3]; 
+                float stHpMemArq = 0, stHpMemBarb = 0, stHpMemMaga = 0, stHpMemDruida = 0;
+                float[] sortTemp = new float[arrayHP.Length];
                 Random random = new Random();
-
 
                 while ((arrayHP[0] > 0 || arrayHP[1] > 0 || arrayHP[2] > 0 || arrayHP[3] > 0) && arrayMonster[0] > 0 && intents > 0)
                 {
@@ -531,16 +531,16 @@ namespace GameProject
                                 {
                                     Console.ForegroundColor = ConsoleColor.DarkYellow;
                                     Console.WriteLine();
-                                    Console.WriteLine(arquera + selAccio);
-                                    Console.WriteLine(atacar);
-                                    Console.WriteLine(protegirse);
-                                    Console.WriteLine(habEspecial);
+                                    Console.WriteLine(arrayNombres[0] + " " + SelAccio);
+                                    Console.WriteLine(Atacar);
+                                    Console.WriteLine(Protegirse);
+                                    Console.WriteLine(HabEspecial);
                                     Console.ResetColor();
                                     decArquera = Convert.ToInt16(Console.ReadLine());
                                     while (ModeFunc.Comprobation(decArquera,minOne,minThree) && intents > 0)
                                     {
                                         Console.ForegroundColor = ConsoleColor.DarkRed;
-                                        Console.WriteLine(errorValors);
+                                        Console.WriteLine(ErrorValors);
                                         Console.ResetColor();
                                         Console.WriteLine();
                                         intents--;
@@ -563,29 +563,29 @@ namespace GameProject
                                                 arrayAttack[0] = Actions.Critical(arrayAttack[0]);
                                                 arrayAttack[0] = Actions.Attack(arrayAttack[0], arrayMonster[2]);
                                                 arrayMonster[0] = Actions.RestHP(arrayMonster[0], arrayAttack[0]);
-                                                Console.WriteLine(arquera + dany + memArquera*2 + danyGen);
-                                                Console.WriteLine(defensaMonstre + arrayAttack[0] + danyGen);
-                                                Console.WriteLine(restHp + monstre + arrayMonster[0]);
+                                                Console.WriteLine(arrayNombres[0] + " " + dany + memArquera*2 + DanyGen);
+                                                Console.WriteLine(DefensaMonstre + arrayAttack[0] + DanyGen);
+                                                Console.WriteLine(RestHp + monstre + arrayMonster[0]);
                                             }
                                             else
                                             {
                                                 Console.WriteLine(NormalAttack);
                                                 arrayAttack[0] = Actions.Attack(arrayAttack[0], arrayMonster[2]);
                                                 arrayMonster[0] = Actions.RestHP(arrayMonster[0], arrayAttack[0]);
-                                                Console.WriteLine(arquera + dany + memArquera + danyGen);
-                                                Console.WriteLine(defensaMonstre + arrayAttack[0] + danyGen);
-                                                Console.WriteLine(restHp + monstre + arrayMonster[0]);
+                                                Console.WriteLine(arrayNombres[0] + " " + dany + memArquera + DanyGen);
+                                                Console.WriteLine(DefensaMonstre + arrayAttack[0] + DanyGen);
+                                                Console.WriteLine(RestHp + monstre + arrayMonster[0]);
                                             }
 
                                             break;
                                         case 2:
                                             arrayDeff[0] = Actions.Deffense(arrayDeff[0]);
-                                            Console.WriteLine(arquera + prote);
+                                            Console.WriteLine(arrayNombres[0] + " " + prote);
                                             break;
                                         case 3:
                                             if (countHabArquera >= 5)
                                             {
-                                                Console.WriteLine(arquera + stHab + stHabArquera);
+                                                Console.WriteLine(arrayNombres[0] + " " + stHab + StHabArquera);
                                                 noqMonstre = 2;
                                                 countHabArquera = 0;
                                             }
@@ -605,16 +605,16 @@ namespace GameProject
                                 {
                                     Console.ForegroundColor = ConsoleColor.DarkYellow;
                                     Console.WriteLine();
-                                    Console.WriteLine(barbaro + selAccio);
-                                    Console.WriteLine(atacar);
-                                    Console.WriteLine(protegirse);
-                                    Console.WriteLine(habEspecial);
+                                    Console.WriteLine(arrayNombres[1] + " " + SelAccio);
+                                    Console.WriteLine(Atacar);
+                                    Console.WriteLine(Protegirse);
+                                    Console.WriteLine(HabEspecial);
                                     Console.ResetColor();
                                     decBarbaro = Convert.ToInt16(Console.ReadLine());
                                     while (ModeFunc.Comprobation(decBarbaro, minOne, minThree) && intents > 0)
                                     {
                                         Console.ForegroundColor = ConsoleColor.DarkRed;
-                                        Console.WriteLine(errorValors);
+                                        Console.WriteLine(ErrorValors);
                                         Console.ResetColor();
                                         Console.WriteLine();
                                         intents--;
@@ -637,29 +637,29 @@ namespace GameProject
                                                 arrayAttack[1] = Actions.Critical(arrayAttack[1]);
                                                 arrayAttack[1] = Actions.Attack(arrayAttack[1], arrayMonster[2]);
                                                 arrayMonster[0] = Actions.RestHP(arrayMonster[0], arrayAttack[1]);
-                                                Console.WriteLine(barbaro + dany + memBarbaro *2 + danyGen);
-                                                Console.WriteLine(defensaMonstre + arrayAttack[1] + danyGen);
-                                                Console.WriteLine(restHp + monstre + arrayMonster[0]);
+                                                Console.WriteLine(arrayNombres[1] + " " + dany + memBarbaro *2 + DanyGen);
+                                                Console.WriteLine(DefensaMonstre + arrayAttack[1] + DanyGen);
+                                                Console.WriteLine(RestHp + monstre + arrayMonster[0]);
                                             }
                                             else
                                             {
                                                 Console.WriteLine(NormalAttack);
                                                 arrayAttack[1] = Actions.Attack(arrayAttack[1], arrayMonster[2]);
                                                 arrayMonster[0] = Actions.RestHP(arrayMonster[0], arrayAttack[1]);
-                                                Console.WriteLine(barbaro + dany + memBarbaro + danyGen);
-                                                Console.WriteLine(defensaMonstre + arrayAttack[1] + danyGen);
-                                                Console.WriteLine(restHp + monstre + arrayMonster[0]);
+                                                Console.WriteLine(arrayNombres[1] + " " + dany + memBarbaro + DanyGen);
+                                                Console.WriteLine(DefensaMonstre + arrayAttack[1] + DanyGen);
+                                                Console.WriteLine(RestHp + monstre + arrayMonster[0]);
                                             }
 
                                             break;
                                         case 2:
                                             arrayDeff[1] = Actions.Deffense(arrayDeff[1]);
-                                            Console.WriteLine(barbaro + prote);
+                                            Console.WriteLine(arrayNombres[1] + " " + prote);
                                             break;
                                         case 3:
                                             if (countHabBarbaro >= 5)
                                             {
-                                                Console.WriteLine(barbaro + stHab + stHabBarbaro);
+                                                Console.WriteLine(arrayNombres[1] + " " + stHab + StHabBarbaro);
                                                 defHabBarbaro = 3;
                                                 countHabBarbaro = 0;
                                             }
@@ -679,16 +679,16 @@ namespace GameProject
                                 {
                                     Console.ForegroundColor = ConsoleColor.DarkYellow;
                                     Console.WriteLine();
-                                    Console.WriteLine(maga + selAccio);
-                                    Console.WriteLine(atacar);
-                                    Console.WriteLine(protegirse);
-                                    Console.WriteLine(habEspecial);
+                                    Console.WriteLine(arrayNombres[2] + " " + SelAccio);
+                                    Console.WriteLine(Atacar);
+                                    Console.WriteLine(Protegirse);
+                                    Console.WriteLine(HabEspecial);
                                     Console.ResetColor();
                                     decMaga = Convert.ToInt16(Console.ReadLine());
                                     while (ModeFunc.Comprobation(decMaga, minOne, minThree) && intents > 0)
                                     {
                                         Console.ForegroundColor = ConsoleColor.DarkRed;
-                                        Console.WriteLine(errorValors);
+                                        Console.WriteLine(ErrorValors);
                                         Console.ResetColor();
                                         Console.WriteLine();
                                         intents--;
@@ -710,32 +710,32 @@ namespace GameProject
                                                 arrayAttack[2] = Actions.Critical(arrayAttack[2]);
                                                 arrayAttack[2] = Actions.Attack(arrayAttack[2], arrayMonster[2]);
                                                 arrayMonster[0] = Actions.RestHP(arrayMonster[0], arrayAttack[2]);
-                                                Console.WriteLine(maga + dany + memMaga*2 + danyGen);
-                                                Console.WriteLine(defensaMonstre + arrayAttack[2] + danyGen);
-                                                Console.WriteLine(restHp + monstre + arrayMonster[0]);
+                                                Console.WriteLine(arrayNombres[2] + " " + dany + memMaga*2 + DanyGen);
+                                                Console.WriteLine(DefensaMonstre + arrayAttack[2] + DanyGen);
+                                                Console.WriteLine(RestHp + monstre + arrayMonster[0]);
                                             }
                                             else
                                             {
                                                 Console.WriteLine(NormalAttack);
                                                 arrayAttack[2] = Actions.Attack(arrayAttack[2], arrayMonster[2]);
                                                 arrayMonster[0] = Actions.RestHP(arrayMonster[0], arrayAttack[2]);
-                                                Console.WriteLine(maga + dany + memMaga + danyGen);
-                                                Console.WriteLine(defensaMonstre + arrayAttack[2] + danyGen);
-                                                Console.WriteLine(restHp + monstre + arrayMonster[0]);
+                                                Console.WriteLine(arrayNombres[2] + " " + dany + memMaga + DanyGen);
+                                                Console.WriteLine(DefensaMonstre + arrayAttack[2] + DanyGen);
+                                                Console.WriteLine(RestHp + monstre + arrayMonster[0]);
                                             }
                                             break;
                                         case 2:
                                             arrayDeff[2] = Actions.Deffense(arrayDeff[2]);
-                                            Console.WriteLine(maga + prote);
+                                            Console.WriteLine(arrayNombres[2] + " " + prote);
                                             break;
                                         case 3:
                                             if (countHabMaga >= 5)
                                             {
                                                 arrayAttack[2] = (arrayAttack[2] * 3) * arrayMonster[2];
                                                 arrayMonster[0] = arrayMonster[0] - arrayAttack[2];
-                                                Console.WriteLine(maga + stHab + stHabMaga + danyHabMaga + danyGen);
-                                                Console.WriteLine(defensaMonstre + arrayAttack[2] + danyGen);
-                                                Console.WriteLine(restHp + monstre + arrayMonster[0]);
+                                                Console.WriteLine(arrayNombres[2] + " " + stHab + StHabMaga + danyHabMaga + DanyGen);
+                                                Console.WriteLine(DefensaMonstre + arrayAttack[2] + DanyGen);
+                                                Console.WriteLine(RestHp + monstre + arrayMonster[0]);
                                                 countHabMaga = 0;
                                             }
                                             else
@@ -754,16 +754,16 @@ namespace GameProject
                                 {
                                     Console.ForegroundColor = ConsoleColor.DarkYellow;
                                     Console.WriteLine();
-                                    Console.WriteLine(druida + selAccio);
-                                    Console.WriteLine(atacar);
-                                    Console.WriteLine(protegirse);
-                                    Console.WriteLine(habEspecial);
+                                    Console.WriteLine(arrayNombres[3] + " " + SelAccio);
+                                    Console.WriteLine(Atacar);
+                                    Console.WriteLine(Protegirse);
+                                    Console.WriteLine(HabEspecial);
                                     Console.ResetColor();
                                     decDruida = Convert.ToInt16(Console.ReadLine());
                                     while (ModeFunc.Comprobation(decDruida, minOne, minThree) && intents > 0)
                                     {
                                         Console.ForegroundColor = ConsoleColor.DarkRed;
-                                        Console.WriteLine(errorValors);
+                                        Console.WriteLine(ErrorValors);
                                         Console.ResetColor();
                                         Console.WriteLine();
                                         intents--;
@@ -785,109 +785,109 @@ namespace GameProject
                                                 arrayAttack[3] = Actions.Critical(arrayAttack[3]);
                                                 arrayAttack[3] = Actions.Attack(arrayAttack[3], arrayMonster[2]);
                                                 arrayMonster[0] = Actions.RestHP(arrayMonster[0], arrayAttack[3]);
-                                                Console.WriteLine(druida + dany + memDruida*2 + danyGen);
-                                                Console.WriteLine(defensaMonstre + arrayAttack[3] + danyGen);
-                                                Console.WriteLine(restHp + monstre + arrayMonster[0]);
+                                                Console.WriteLine(arrayNombres[3] + " " + dany + memDruida*2 + DanyGen);
+                                                Console.WriteLine(DefensaMonstre + arrayAttack[3] + DanyGen);
+                                                Console.WriteLine(RestHp + monstre + arrayMonster[0]);
                                             }
                                             else
                                             {
                                                 Console.WriteLine(NormalAttack);
                                                 arrayAttack[3] = Actions.Attack(arrayAttack[3], arrayMonster[2]);
                                                 arrayMonster[0] = Actions.RestHP(arrayMonster[0], arrayAttack[3]);
-                                                Console.WriteLine(druida + dany + memDruida + danyGen);
-                                                Console.WriteLine(defensaMonstre + arrayAttack[3] + danyGen);
-                                                Console.WriteLine(restHp + monstre + arrayMonster[0]);
+                                                Console.WriteLine(arrayNombres[3] + " " + dany + memDruida + DanyGen);
+                                                Console.WriteLine(DefensaMonstre + arrayAttack[3] + DanyGen);
+                                                Console.WriteLine(RestHp + monstre + arrayMonster[0]);
                                             }
                                             break;
                                         case 2:
                                             arrayDeff[3] = Actions.Deffense(arrayDeff[3]);
-                                            Console.WriteLine(druida + prote);
+                                            Console.WriteLine(arrayNombres[3] + " " + prote);
                                             break;
                                         case 3:
-                                            if (countHabDruida >= 5) //CURA HABILITAT DRUIDA
+                                            if (countHabDruida >= 5)
                                             {
-                                                if (arrayHP[0] < hpMemArq) //curar arquera
+                                                if (arrayHP[0] < hpMemArq)
                                                 {
                                                     if (arrayHP[0] >= hpMemArq - 500)
                                                     {
                                                         stHpMemArq = - (arrayHP[0] - hpMemArq);
                                                         arrayHP[0] = arrayHP[0] + (hpMemArq - arrayHP[0]);
-                                                        Console.WriteLine(druida + stHab + stCura + stHpMemArq + stVida + arquera);
-                                                        Console.WriteLine(hpActual + arquera + ": " + arrayHP[0]);
+                                                        Console.WriteLine(arrayNombres[3] + " " + stHab + StCura + stHpMemArq + StVida + arrayNombres[0]);
+                                                        Console.WriteLine(HpActual + arrayNombres[0] + " " + ": " + arrayHP[0]);
                                                     }
                                                     else if (arrayHP[0] < hpMemArq - 500)
                                                     {
                                                         arrayHP[0] = arrayHP[0] + 500;
-                                                        Console.WriteLine(druida + stHab + stHabDruida + arquera);
-                                                        Console.WriteLine(hpActual + arquera + ": " + arrayHP[0]);
+                                                        Console.WriteLine(arrayNombres[3] + " " + stHab + StHabDruida + arrayNombres[0]);
+                                                        Console.WriteLine(HpActual + arrayNombres[0] + " " + ": " + arrayHP[0]);
                                                     }
                                                 }
                                                 else if (arrayHP[0] == hpMemArq)
                                                 {
-                                                    Console.WriteLine(arquera + ": " + stHabDruidaError);
+                                                    Console.WriteLine(arrayNombres[0] + " " + ": " + StHabDruidaError);
                                                 }
                                                 Console.WriteLine();
-                                                if (arrayHP[1] < hpMemBarb) //curar barbaro
+                                                if (arrayHP[1] < hpMemBarb)
                                                 {
                                                     if (arrayHP[1] >= hpMemBarb - 500)
                                                     {
                                                         stHpMemBarb = - (arrayHP[1] - hpMemBarb);
                                                         arrayHP[1] = arrayHP[1] + (hpMemBarb - arrayHP[1]);
-                                                        Console.WriteLine(druida + stHab + stCura + stHpMemBarb + stVida + barbaro);
-                                                        Console.WriteLine(hpActual + barbaro + ": " + arrayHP[1]);
+                                                        Console.WriteLine(arrayNombres[3] + " " + stHab + StCura + stHpMemBarb + StVida + arrayNombres[1] + " ");
+                                                        Console.WriteLine(HpActual + arrayNombres[1] + " " + ": " + arrayHP[1]);
                                                     }
                                                     else if (arrayHP[1] < hpMemBarb - 500)
                                                     {
                                                         arrayHP[1] = arrayHP[1] + 500;
-                                                        Console.WriteLine(druida + stHab + stHabDruida + barbaro);
-                                                        Console.WriteLine(hpActual + barbaro + ": " + arrayHP[1]);
+                                                        Console.WriteLine(arrayNombres[3] + " " + stHab + StHabDruida + arrayNombres[1] + " ");
+                                                        Console.WriteLine(HpActual + arrayNombres[1] + " " + ": " + arrayHP[1]);
                                                     }
                                                 }
                                                 else if (arrayHP[1] == hpMemBarb)
                                                 {
-                                                    Console.WriteLine(barbaro + ": " + stHabDruidaError);
+                                                    Console.WriteLine(arrayNombres[1] + " " + ": " + StHabDruidaError);
                                                 }
                                                 Console.WriteLine();
-                                                if (arrayHP[2] < hpMemMaga) //curar maga
+                                                if (arrayHP[2] < hpMemMaga)
                                                 {
                                                     if (arrayHP[2] >= hpMemMaga - 500)
                                                     {
                                                         stHpMemMaga = - (arrayHP[2] - hpMemMaga);
                                                         arrayHP[2] = arrayHP[2] + (hpMemMaga - arrayHP[2]);
-                                                        Console.WriteLine(druida + stHab + stCura + stHpMemMaga + stVida + maga);
-                                                        Console.WriteLine(hpActual + maga + ": " + arrayHP[2]);
+                                                        Console.WriteLine(arrayNombres[3] + " " + stHab + StCura + stHpMemMaga + StVida + arrayNombres[2] + " ");
+                                                        Console.WriteLine(HpActual + arrayNombres[2] + " " + ": " + arrayHP[2]);
                                                     }
                                                     else if (arrayHP[2] < hpMemMaga - 500)
                                                     {
                                                         arrayHP[2] = arrayHP[2] + 500;
-                                                        Console.WriteLine(druida + stHab + stHabDruida + maga);
-                                                        Console.WriteLine(hpActual + barbaro + ": " + arrayHP[2]);
+                                                        Console.WriteLine(arrayNombres[3] + " " + stHab + StHabDruida + arrayNombres[2] + " ");
+                                                        Console.WriteLine(HpActual + arrayNombres[1] + " " + ": " + arrayHP[2]);
                                                     }
                                                 }
                                                 else if (arrayHP[2] == hpMemMaga)
                                                 {
-                                                    Console.WriteLine(maga + ": " + stHabDruidaError);
+                                                    Console.WriteLine(arrayNombres[2] + " " + ": " + StHabDruidaError);
                                                 }
                                                 Console.WriteLine();
-                                                if (arrayHP[3] < hpMemDruida) //curar druida
+                                                if (arrayHP[3] < hpMemDruida)
                                                 {
                                                     if (arrayHP[3] >= hpMemDruida - 500)
                                                     {
                                                         stHpMemDruida = -(arrayHP[3] - hpMemDruida);
                                                         arrayHP[3] = arrayHP[3] + (hpMemDruida - arrayHP[3]);
-                                                        Console.WriteLine(druida + stHab + stCura + stHpMemDruida + stVida + druida);
-                                                        Console.WriteLine(hpActual + druida + ": " + arrayHP[3]);
+                                                        Console.WriteLine(arrayNombres[3] + " " + stHab + StCura + stHpMemDruida + StVida + arrayNombres[3] + " ");
+                                                        Console.WriteLine(HpActual + arrayNombres[3] + " " + ": " + arrayHP[3]);
                                                     }
                                                     else if (arrayHP[3] < hpMemDruida - 500)
                                                     {
                                                         arrayHP[3] = arrayHP[3] + 500;
-                                                        Console.WriteLine(druida + stHab + stHabDruida + druida);
-                                                        Console.WriteLine(hpActual + druida + ": " + arrayHP[3]);
+                                                        Console.WriteLine(arrayNombres[3] + " " + stHab + StHabDruida + arrayNombres[3] + " ");
+                                                        Console.WriteLine(HpActual + arrayNombres[3] + " " + ": " + arrayHP[3]);
                                                     }
                                                 }
                                                 else if (arrayHP[3] == hpMemDruida)
                                                 {
-                                                    Console.WriteLine(druida + ": " + stHabDruidaError);
+                                                    Console.WriteLine(arrayNombres[3] + " " + ": " + StHabDruidaError);
                                                 }
                                                 Console.WriteLine();
                                                 countHabDruida = 0;
@@ -905,67 +905,67 @@ namespace GameProject
                         }  
                     }
                     Console.WriteLine();
-                    if ((arrayMonster[0] > 0 && noqMonstre == 0) && intents > 0) //ATAC MONSTRE NO NOQUEJAT
+                    if ((arrayMonster[0] > 0 && noqMonstre == 0) && intents > 0)
                     {
                         Console.ForegroundColor = ConsoleColor.DarkRed;
                         if (arrayHP[0] > 0)
                         {
                             arrayMonster[1] = Actions.Attack(arrayMonster[1], arrayDeff[0]); 
                             arrayHP[0] = Actions.RestHP(arrayHP[0], arrayMonster[1]);
-                            Console.WriteLine(monstre + danyAtacMonstre + memMonstre + danyGen);
-                            Console.WriteLine(defensaArquera + arrayMonster[1] + danyGen);
+                            Console.WriteLine(monstre + DanyAtacMonstre + memMonstre + DanyGen);
+                            Console.WriteLine(DefensaArquera + arrayMonster[1] + DanyGen);
                             if (arrayHP[0] < 0)
                             {
                                 arrayHP[0] = 0;
-                                Console.WriteLine(restHp + arquera + arrayHP[0]);
+                                Console.WriteLine(RestHp + arrayNombres[0] + " " + arrayHP[0]);
                             }
                             else
                             {
-                                Console.WriteLine(restHp + arquera + arrayHP[0]);
+                                Console.WriteLine(RestHp + arrayNombres[0] + " " + arrayHP[0]);
                             }
                             Console.WriteLine();
                             Console.ReadLine();
                             arrayMonster[1] = memMonstre;
                         }
-                        if (defHabBarbaro == 0 && arrayHP[1] > 0) //NO HABILITAT BARBAR
+                        if (defHabBarbaro == 0 && arrayHP[1] > 0)
                         {
                             arrayMonster[1] = Actions.Attack(arrayMonster[1],arrayDeff[1]);
                             arrayHP[1] = Actions.RestHP(arrayHP[1], arrayMonster[1]);
-                            Console.WriteLine(monstre + danyAtacMonstre + memMonstre + danyGen);
-                            Console.WriteLine(defensaBarbaro + arrayMonster[1] + danyGen);
+                            Console.WriteLine(monstre + DanyAtacMonstre + memMonstre + DanyGen);
+                            Console.WriteLine(DefensaBarbaro + arrayMonster[1] + DanyGen);
                             if (arrayHP[1] < 0)
                             {
                                 arrayHP[1] = 0;
-                                Console.WriteLine(restHp + barbaro + arrayHP[1]);
+                                Console.WriteLine(RestHp + arrayNombres[1] + " " + arrayHP[1]);
                             }
                             else
                             {
-                                Console.WriteLine(restHp + barbaro + arrayHP[1]);
+                                Console.WriteLine(RestHp + arrayNombres[1] + " " + arrayHP[1]);
                             }
                             Console.WriteLine();
                             Console.ReadLine();
                             arrayMonster[1] = memMonstre;
                         }
-                        else if (defHabBarbaro > 1 && arrayHP[1] > 0) //HABILITAT BARBAR
+                        else if (defHabBarbaro > 1 && arrayHP[1] > 0)
                         {
                             defHabBarbaro--;
-                            Console.WriteLine(stHabDefBarb);
+                            Console.WriteLine(StHabDefBarb);
                             Console.ReadLine();
                         }
                         if (arrayHP[2] > 0)
                         {
                             arrayMonster[1] = Actions.Attack(arrayMonster[1], arrayDeff[2]);
                             arrayHP[2] = Actions.RestHP(arrayHP[2], arrayMonster[1]);
-                            Console.WriteLine(monstre + danyAtacMonstre + memMonstre + danyGen);
-                            Console.WriteLine(defensaMaga + arrayMonster[1] + danyGen);
+                            Console.WriteLine(monstre + DanyAtacMonstre + memMonstre + DanyGen);
+                            Console.WriteLine(DefensaMaga + arrayMonster[1] + DanyGen);
                             if (arrayHP[2] < 0)
                             {
                                 arrayHP[2] = 0;
-                                Console.WriteLine(restHp + maga + arrayHP[2]);
+                                Console.WriteLine(RestHp + arrayNombres[2] + " " + arrayHP[2]);
                             }
                             else
                             {
-                                Console.WriteLine(restHp + maga + arrayHP[2]);
+                                Console.WriteLine(RestHp + arrayNombres[2] + " " + arrayHP[2]);
                             }
                             Console.WriteLine();
                             Console.ReadLine();
@@ -975,45 +975,42 @@ namespace GameProject
                         {
                             arrayMonster[1] = Actions.Attack(arrayMonster[1], arrayDeff[3]);
                             arrayHP[3] = Actions.RestHP(arrayHP[3], arrayMonster[1]);
-                            Console.WriteLine(monstre + danyAtacMonstre + memMonstre + danyGen);
-                            Console.WriteLine(defensaDruida + arrayMonster[1] + danyGen);
+                            Console.WriteLine(monstre + DanyAtacMonstre + memMonstre + DanyGen);
+                            Console.WriteLine(DefensaDruida + arrayMonster[1] + DanyGen);
                             if (arrayHP[3] < 0)
                             {
                                 arrayHP[3] = 0;
-                                Console.WriteLine(restHp + druida + arrayHP[3]);
+                                Console.WriteLine(RestHp + arrayNombres[3] + " " + arrayHP[3]);
                             }
                             else
                             {
-                                Console.WriteLine(restHp + druida + arrayHP[3]);
+                                Console.WriteLine(RestHp + arrayNombres[3] + " " + arrayHP[3]);
                             }
                             Console.WriteLine();
                             Console.ReadLine();
                             arrayMonster[1] = memMonstre;
                         }
                     }
-                    else if ((arrayMonster[0] > 0 && noqMonstre > 0) && intents > 0) //MONSTRE NOQUEJAT
+                    else if ((arrayMonster[0] > 0 && noqMonstre > 0) && intents > 0)
                     {
                         Console.WriteLine(stNoqMonstre);
                         Console.ReadLine();
                         noqMonstre--;
                     }
 
-                    float[] sortTemp = new float [arrayHP.Length];
-
                     for (int i = 0; i < arrayHP.Length; i++)
                     {
                         sortTemp[i] = arrayHP[i];
                     }
-
                     sortTemp = Actions.ArraySort(sortTemp);
-
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
                     Console.WriteLine(HpRest);
-
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
                     for (int i = 0; i< sortTemp.Length; i++)
                     {
-                        Console.WriteLine(sortTemp[i]);
+                        Console.WriteLine(Hearts + " " + sortTemp[i]);
                     }
-
+                    Console.ResetColor();
                     Console.ReadLine();
 
                     Console.ResetColor();
@@ -1021,14 +1018,11 @@ namespace GameProject
                     {
                         Console.Clear();
                         Console.ForegroundColor = ConsoleColor.DarkRed;
-                        Console.WriteLine(mortArquera);
+                        Console.WriteLine(MortArquera);
                         Console.ReadLine();
                         Console.ResetColor();
                         Console.ForegroundColor = ConsoleColor.White;
-
-                        //PRINT SCULL
                         GraphicFunc.Skull();
-
                         Console.ResetColor();
                         Console.ReadLine();
                         mortA++;
@@ -1037,14 +1031,11 @@ namespace GameProject
                     {
                         Console.Clear();
                         Console.ForegroundColor = ConsoleColor.DarkRed;
-                        Console.WriteLine(mortBarbaro);
+                        Console.WriteLine(MortBarbaro);
                         Console.ReadLine();
                         Console.ResetColor();
                         Console.ForegroundColor = ConsoleColor.White;
-
-                        //PRINT SCULL
                         GraphicFunc.Skull();
-
                         Console.ResetColor();
                         Console.ReadLine();
                         mortB++;
@@ -1053,14 +1044,11 @@ namespace GameProject
                     {
                         Console.Clear();
                         Console.ForegroundColor = ConsoleColor.DarkRed;
-                        Console.WriteLine(mortMaga);
+                        Console.WriteLine(MortMaga);
                         Console.ReadLine();
                         Console.ResetColor();
                         Console.ForegroundColor = ConsoleColor.White;
-
-                        //PRINT SCULL
                         GraphicFunc.Skull();
-
                         Console.ResetColor();
                         Console.ReadLine();
                         mortM++;
@@ -1069,14 +1057,11 @@ namespace GameProject
                     {
                         Console.Clear();
                         Console.ForegroundColor = ConsoleColor.DarkRed;
-                        Console.WriteLine(mortDruida);
+                        Console.WriteLine(MortDruida);
                         Console.ReadLine();
                         Console.ResetColor();
                         Console.ForegroundColor = ConsoleColor.White;
-
-                        //PRINT SCULL
                         GraphicFunc.Skull();
-
                         Console.ResetColor();
                         Console.ReadLine();
                         mortD++;
@@ -1092,18 +1077,15 @@ namespace GameProject
                     {
                         Console.ReadLine();
                         Console.ForegroundColor = ConsoleColor.Cyan;
-
-                        //PRINT WIN
                         GraphicFunc.Win();
-
                         Console.ResetColor();
                         Console.ReadLine();
                         Console.Clear();
-                        Console.WriteLine("Què vols fer?");
+                        Console.WriteLine(Choose);
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("Jugar (0)");
+                        Console.WriteLine(Play);
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Sortir (1)");
+                        Console.WriteLine(LeaveGame);
                         Console.ResetColor();
                         Console.ForegroundColor = ConsoleColor.Gray;
                         numStart = Convert.ToInt32(Console.ReadLine());
@@ -1112,7 +1094,7 @@ namespace GameProject
                             countInicial++;
                             if (countInicial >= 3) return;
                             Console.ForegroundColor = ConsoleColor.DarkRed;
-                            Console.WriteLine("El numero a de ser [0] o [1]");
+                            Console.WriteLine(Error01);
                             numStart = Convert.ToInt32(Console.ReadLine());
                             Console.ResetColor();
                         }
@@ -1122,17 +1104,16 @@ namespace GameProject
                     {
                         Console.ForegroundColor = ConsoleColor.DarkRed;
 
-                        //PRINT LOSE MESSAGE
                         GraphicFunc.Lose();
 
                         Console.ResetColor();
                         Console.ReadLine();
                         Console.Clear();
-                        Console.WriteLine("Què vols fer?");
+                        Console.WriteLine(Choose);
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("Jugar (0)");
+                        Console.WriteLine(Play);
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Sortir (1)");
+                        Console.WriteLine(LeaveGame);
                         Console.ResetColor();
                         Console.ForegroundColor = ConsoleColor.Gray;
                         numStart = Convert.ToInt32(Console.ReadLine());
@@ -1141,7 +1122,7 @@ namespace GameProject
                             countInicial++;
                             if (countInicial >= 3) return;
                             Console.ForegroundColor = ConsoleColor.DarkRed;
-                            Console.WriteLine("El numero a de ser [0] o [1]");
+                            Console.WriteLine(Error01);
                             numStart = Convert.ToInt32(Console.ReadLine());
                             Console.ResetColor();
                         }
@@ -1150,19 +1131,16 @@ namespace GameProject
                     if (intents == 0)
                     {
                         Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine(errorsEsgotats);
+                        Console.WriteLine(ErrorsEsgotats);
                         Console.ResetColor();
                         Console.ReadLine();
                         Main();
                     }
                 }
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.WriteLine("Sortint del programa");
+                Console.WriteLine(Leave);
                 Console.ResetColor();
             }
         }
     }
 }
-
-
-
