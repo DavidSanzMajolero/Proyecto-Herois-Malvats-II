@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FightLibrary\FightLibrary.csproj" />
+    <ProjectReference Include="..\FunctionTests\FunctionTests.csproj" />
     <ProjectReference Include="..\Graphs\Graphs.csproj" />
     <ProjectReference Include="..\ModeFunctions\ModeFunctions.csproj" />
   </ItemGroup>

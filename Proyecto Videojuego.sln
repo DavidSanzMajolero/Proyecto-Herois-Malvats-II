@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Graphs", "Graphs\Graphs.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModeFunctions", "ModeFunctions\ModeFunctions.csproj", "{FD3D6DBE-05F8-4E92-8758-534F77F550CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FightLibrary", "FightLibrary\FightLibrary.csproj", "{0357CC1A-D192-49A4-8E85-3EF443917DF5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FightLibrary", "FightLibrary\FightLibrary.csproj", "{0357CC1A-D192-49A4-8E85-3EF443917DF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionTests", "FunctionTests\FunctionTests.csproj", "{300CD9F1-D8A3-4F93-A139-71CFFF640DDF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{0357CC1A-D192-49A4-8E85-3EF443917DF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0357CC1A-D192-49A4-8E85-3EF443917DF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0357CC1A-D192-49A4-8E85-3EF443917DF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{300CD9F1-D8A3-4F93-A139-71CFFF640DDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{300CD9F1-D8A3-4F93-A139-71CFFF640DDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{300CD9F1-D8A3-4F93-A139-71CFFF640DDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{300CD9F1-D8A3-4F93-A139-71CFFF640DDF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
